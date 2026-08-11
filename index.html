@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introdução à Programação com Python: Lógica, Jogos e Acessibilidade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+  </header>
+
+  <main id="conteudo-principal">
+    <section aria-labelledby="titulo-abertura">
+      <h1 id="titulo-abertura">
+        Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+      </h1>
+      <p>
+        Este curso não tenta esgotar tudo o que dá para fazer com Python — o
+        objetivo é apresentar a linguagem, desenvolver lógica de
+        programação e, ao longo das aulas, construir um jogo chamado
+        <strong>Invasão Alienígena</strong> (inspirado em Space Invaders),
+        com um modo pensado desde o início para funcionar bem para uma
+        pessoa sem visão. O curso é para jovens a partir de 16 anos, sem
+        exigência de conhecimento prévio de programação.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-experimente">
+      <h2 id="titulo-experimente">Experimente Python agora</h2>
+      <p>
+        Este é o mesmo Python que vamos usar no curso, rodando aqui no
+        navegador só para você experimentar. A partir da Aula 1, vamos
+        instalar o Python de verdade no seu computador.
+      </p>
+
+      <div class="editor-python" data-editor-python>
+        <label for="codigo-experimente">Seu código:</label>
+        <textarea id="codigo-experimente" class="editor-python__codigo" rows="6">nome = input("Qual e o seu nome? ")
+print("Ola, " + nome + "! Bem-vindo ao curso de Python.")</textarea>
+        <button type="button" class="editor-python__executar">▶ Executar</button>
+        <div class="editor-python__saida" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="titulo-grade-de-aulas">
+      <h2 id="titulo-grade-de-aulas">Aulas</h2>
+
+      <section aria-labelledby="titulo-bloco-1">
+        <h3 id="titulo-bloco-1">Bloco 1 — Python geral (aulas 1 a 8)</h3>
+        <ul class="grade-de-aulas">
+          <li class="cartao-aula">
+            <a class="cartao-aula__link" href="aulas/aula-01-apresentacao/index.html">
+              <span class="cartao-aula__numero">Aula 1</span>
+              <p class="cartao-aula__titulo">
+                Apresentação, dinâmica do curso e primeiros passos
+              </p>
+              <p class="cartao-aula__resumo">
+                Como o curso funciona, instalação do ambiente e criação da
+                conta no GitHub.
+              </p>
+              <span class="etiqueta-status etiqueta-status--disponivel">Disponível</span>
+            </a>
+          </li>
+          <li class="cartao-aula">
+            <a class="cartao-aula__link" href="aulas/aula-02-primeiro-programa/index.html">
+              <span class="cartao-aula__numero">Aula 2</span>
+              <p class="cartao-aula__titulo">
+                Primeiro programa, variáveis e tipos de dados
+              </p>
+              <p class="cartao-aula__resumo">
+                Olá, mundo!, variáveis, tipos simples de dado e os comandos
+                print e input.
+              </p>
+              <span class="etiqueta-status etiqueta-status--disponivel">Disponível</span>
+            </a>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 3</span>
+            <p class="cartao-aula__titulo">Listas e laços for</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 4</span>
+            <p class="cartao-aula__titulo">Condicionais (if/elif/else)</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 5</span>
+            <p class="cartao-aula__titulo">Dicionários</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 6</span>
+            <p class="cartao-aula__titulo">Laços while e entrada do usuário</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 7</span>
+            <p class="cartao-aula__titulo">Funções</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 8</span>
+            <p class="cartao-aula__titulo">Introdução a classes e POO</p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="titulo-bloco-2">
+        <h3 id="titulo-bloco-2">Bloco 2 — Jogo com Pygame (aulas 9 a 15)</h3>
+        <ul class="grade-de-aulas">
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 9</span>
+            <p class="cartao-aula__titulo">
+              Instalando o pygame-ce e a primeira janela
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 10</span>
+            <p class="cartao-aula__titulo">
+              Classe da nave: movimento, disparo e som
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 11</span>
+            <p class="cartao-aula__titulo">
+              Alienígenas, colisão e acessibilidade sonora
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 12</span>
+            <p class="cartao-aula__titulo">
+              Pontuação, vidas, arquivos e tratamento de erros
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 13</span>
+            <p class="cartao-aula__titulo">
+              Acessibilidade avançada: menu, alternância de modo e testes
+              reais
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 14</span>
+            <p class="cartao-aula__titulo">
+              Organização do projeto e revisão geral
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+          <li class="cartao-aula">
+            <span class="cartao-aula__numero">Aula 15</span>
+            <p class="cartao-aula__titulo">
+              Encerramento, mostra de projetos e desafio final
+            </p>
+            <span class="etiqueta-status etiqueta-status--em-breve">Em breve</span>
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-links-de-apoio">
+      <h2 id="titulo-links-de-apoio">Links de apoio</h2>
+      <div class="links-de-apoio">
+        <div class="links-de-apoio__bloco">
+          <h3>Aulas gravadas</h3>
+          <p>Os links das gravações aparecem aqui, aula a aula.</p>
+        </div>
+        <div class="links-de-apoio__bloco">
+          <h3>Guias de instalação</h3>
+          <p>
+            <a href="recursos/guia-instalacao.html">Guia de instalação do Python e do Thonny</a>
+          </p>
+        </div>
+        <div class="links-de-apoio__bloco">
+          <h3>Slides das aulas</h3>
+          <p>Os slides aparecem aqui, aula a aula.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="titulo-sobre-professor">
+      <h2 id="titulo-sobre-professor">Sobre o professor</h2>
+      <!-- TODO: professor, escreva aqui sua apresentação -->
+      <p>
+        Em breve, uma apresentação do professor responsável pelo curso.
+      </p>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a href="mailto:professor@substituir.com.br">professor@substituir.com.br</a>
+    </p>
+  </footer>
+
+  <script src="scripts/endereco-professor.js" defer></script>
+  <script src="scripts/editor-python.js" defer></script>
+</body>
+</html>

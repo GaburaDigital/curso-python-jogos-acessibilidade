@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 2 — Primeiro programa, variáveis e tipos de dados | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 2 — Primeiro programa, variáveis e tipos de dados</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Escrever e executar o primeiro programa.</li>
+        <li>Entender o que são variáveis.</li>
+        <li>
+          Conhecer os tipos simples de dado (texto, número inteiro, número
+          decimal, verdadeiro/falso) e os comandos <code>print</code> e
+          <code>input</code>.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula</h2>
+      <p>
+        O que significa "linguagem interpretada": o Python lê e executa
+        seu código linha por linha, diferente de linguagens que precisam
+        ser compiladas antes de rodar.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>"Olá, mundo!"</li>
+        <li>Variáveis.</li>
+        <li>
+          Tipos simples: <code>str</code>, <code>int</code>,
+          <code>float</code>, <code>bool</code>.
+        </li>
+        <li>Concatenação de texto.</li>
+        <li>Comentários no código.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios">
+      <h2 id="titulo-exercicios">Exercícios</h2>
+
+      <section aria-labelledby="titulo-exercicio-facil">
+        <h3 id="titulo-exercicio-facil">Exercício Fácil — Saudação personalizada</h3>
+        <p>
+          Escreva um programa que pergunte o nome e a idade da pessoa e
+          imprima uma saudação personalizada.
+        </p>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-facil">Seu código:</label>
+          <textarea id="codigo-facil" class="editor-python__codigo" rows="6">nome = input("Qual e o seu nome? ")
+idade = input("Quantos anos voce tem? ")
+# escreva aqui o print() com a saudacao</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 02 - Exercicio Facil">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-avancado">
+        <h3 id="titulo-exercicio-avancado">Exercício Avançado — Conversor de temperatura</h3>
+        <p>
+          Peça um valor em Celsius e mostre o equivalente em Fahrenheit.
+          Fórmula: F = C × 9/5 + 32.
+        </p>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-avancado">Seu código:</label>
+          <textarea id="codigo-avancado" class="editor-python__codigo" rows="6">celsius = float(input("Digite a temperatura em Celsius: "))
+# calcule fahrenheit aqui e imprima o resultado</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 02 - Exercicio Avancado">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-pesquisa">
+        <h3 id="titulo-exercicio-pesquisa">Exercício Pesquisa — PEP 8</h3>
+        <p>
+          O que é PEP 8 e por que a comunidade Python valoriza tanto isso?
+          Não precisa escrever código para este — é para pesquisar e, se
+          quiser, compartilhar o que encontrou. Leia mais em
+          <a href="https://peps.python.org/pep-0008/">peps.python.org/pep-0008</a>.
+        </p>
+
+        <p class="bloco-feedback" data-assunto="Aula 02 - Exercicio Pesquisa">
+          Quer compartilhar o que encontrou sobre PEP 8?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">Desafio da semana</h2>
+      <p>
+        Criar um "cartão de visita" em texto — um programa que imprime seu
+        nome, sua idade e uma frase sobre você — e subir no GitHub.
+      </p>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Reforçar como o Narrador lê a saída do shell do Thonny; combinar
+        com o aluno o melhor jeito de navegar entre o editor de código e o
+        shell.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/introduction.html">
+            Tutorial de Python — Uma introdução informal ao Python
+          </a>
+        </li>
+        <li>
+          <a href="https://peps.python.org/pep-0008/">PEP 8 — Style Guide for Python Code</a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a href="mailto:professor@substituir.com.br">professor@substituir.com.br</a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>
