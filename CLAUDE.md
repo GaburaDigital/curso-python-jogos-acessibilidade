@@ -93,14 +93,20 @@ próprio site:
   com algum editor da página (lazy load), com uma mensagem de status visível
   e anunciada ("Carregando Python…" → "Pronto."). Uma vez carregado, fica em
   memória para os próximos cliques em qualquer editor da mesma página.
-- O Pyodide **não** liga `input()` a `window.prompt()` por padrão — sem
-  configurar isso, toda chamada a `input()` estoura `OSError: [Errno 29] I/O
-  error`. É preciso chamar `pyodide.setStdin({ stdin: () => window.prompt() })`
-  explicitamente uma vez, logo após carregar o Pyodide (feito em
-  `scripts/editor-python.js`). `window.prompt()` é nativamente acessível.
-  Clicar em "Cancelar" no prompt retorna `null`, que vira `EOFError` no
-  Python — tratar esse caso mostrando "Execução cancelada." na área de
-  saída em vez de um traceback cru.
+- O Pyodide **não** liga `input()` a `window.prompt()` por padrão, e o
+  mecanismo de stdin do próprio Pyodide não repassa a mensagem do `input()`
+  para a caixa de diálogo (ela abriria vazia). Por isso `builtins.input` é
+  sobrescrito diretamente: a versão personalizada chama uma função JS
+  exposta via `pyodide.globals.set("pedir_entrada_do_usuario", ...)`, que
+  escreve a mensagem na área de saída do editor **antes** de chamar
+  `window.prompt(mensagem)` — assim a pergunta aparece tanto na caixa de
+  diálogo quanto no histórico da área de saída, mesmo depois que o diálogo
+  fechar. Essa função é revinculada a cada execução (não só uma vez), pois
+  a instância do Pyodide é compartilhada entre todos os editores da página
+  e cada execução precisa escrever na área de saída certa. `window.prompt()`
+  é nativamente acessível. Clicar em "Cancelar" retorna `null`, que vira
+  `EOFError` no Python — tratar esse caso mostrando "Execução cancelada."
+  na área de saída em vez de um traceback cru.
 - A execução do Python roda sempre na thread principal da página (nunca em
   Web Worker): rodar em Worker quebraria o `input()`, porque
   `SharedArrayBuffer`/`Atomics.wait` (necessário para bloquear o worker

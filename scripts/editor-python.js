@@ -10,21 +10,27 @@
 
   let promessaPyodide = null;
 
-  // O Pyodide nao liga input() a window.prompt() por padrao: e preciso
-  // configurar o stdin explicitamente, senao toda chamada a input() estoura
-  // "OSError: [Errno 29] I/O error". Retornar null (Cancelar) sinaliza EOF
-  // para o Python, que vira EOFError - tratado como mensagem amigavel em
-  // executarCodigo().
-  function configurarEntradaPadrao(pyodide) {
-    pyodide.setStdin({
-      stdin: function () {
-        const resposta = window.prompt();
-        if (resposta === null) {
-          return null;
-        }
-        return resposta + "\n";
-      },
-    });
+  // O Pyodide nao liga input() a window.prompt() por padrao, e o mecanismo
+  // de stdin do proprio Pyodide nao repassa a mensagem do input() para a
+  // caixa de dialogo. Por isso sobrescrevemos builtins.input diretamente:
+  // a versao personalizada chama a funcao JS "pedir_entrada_do_usuario"
+  // (revinculada a cada execucao em executarCodigo, para escrever na area
+  // de saida do editor certo) passando a mensagem adiante. Retorno null
+  // (Cancelar) vira EOFError, tratado como mensagem amigavel em
+  // executarCodigo(). Isso so precisa ser configurado uma vez por
+  // instancia do Pyodide, nao a cada clique em "Executar".
+  function configurarEntradaPersonalizada(pyodide) {
+    pyodide.runPython(`
+import builtins
+
+def _entrada_personalizada(mensagem=""):
+    resposta = pedir_entrada_do_usuario(mensagem)
+    if resposta is None:
+        raise EOFError("Execucao cancelada.")
+    return resposta
+
+builtins.input = _entrada_personalizada
+`);
   }
 
   function carregarPyodide() {
@@ -39,7 +45,7 @@
         window
           .loadPyodide()
           .then(function (pyodide) {
-            configurarEntradaPadrao(pyodide);
+            configurarEntradaPersonalizada(pyodide);
             resolve(pyodide);
           })
           .catch(reject);
@@ -69,6 +75,20 @@
       batched: function (texto) {
         saida += texto + "\n";
       },
+    });
+
+    // Revincula o bridge do input() a este editor especifico: a instancia
+    // do Pyodide e compartilhada entre todos os editores da pagina, entao
+    // precisamos garantir que a pergunta apareca na area de saida correta.
+    pyodide.globals.set("pedir_entrada_do_usuario", function (mensagem) {
+      saida += mensagem;
+      areaDeSaida.textContent = saida;
+      const resposta = window.prompt(mensagem);
+      if (resposta !== null) {
+        saida += resposta + "\n";
+        areaDeSaida.textContent = saida;
+      }
+      return resposta;
     });
 
     try {
