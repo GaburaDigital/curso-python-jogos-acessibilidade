@@ -10,6 +10,23 @@
 
   let promessaPyodide = null;
 
+  // O Pyodide nao liga input() a window.prompt() por padrao: e preciso
+  // configurar o stdin explicitamente, senao toda chamada a input() estoura
+  // "OSError: [Errno 29] I/O error". Retornar null (Cancelar) sinaliza EOF
+  // para o Python, que vira EOFError - tratado como mensagem amigavel em
+  // executarCodigo().
+  function configurarEntradaPadrao(pyodide) {
+    pyodide.setStdin({
+      stdin: function () {
+        const resposta = window.prompt();
+        if (resposta === null) {
+          return null;
+        }
+        return resposta + "\n";
+      },
+    });
+  }
+
   function carregarPyodide() {
     if (promessaPyodide) {
       return promessaPyodide;
@@ -21,7 +38,10 @@
       script.onload = function () {
         window
           .loadPyodide()
-          .then(resolve)
+          .then(function (pyodide) {
+            configurarEntradaPadrao(pyodide);
+            resolve(pyodide);
+          })
           .catch(reject);
       };
       script.onerror = function () {
@@ -56,7 +76,12 @@
       areaDeSaida.textContent =
         saida || "(o programa rodou sem imprimir nada na tela)";
     } catch (erro) {
-      areaDeSaida.textContent = saida + String(erro);
+      const mensagemErro = String(erro);
+      if (mensagemErro.includes("EOFError")) {
+        areaDeSaida.textContent = saida + "Execução cancelada.";
+      } else {
+        areaDeSaida.textContent = saida + mensagemErro;
+      }
     }
   }
 
