@@ -93,8 +93,21 @@ próprio site:
   com algum editor da página (lazy load), com uma mensagem de status visível
   e anunciada ("Carregando Python…" → "Pronto."). Uma vez carregado, fica em
   memória para os próximos cliques em qualquer editor da mesma página.
-- `input()` não precisa de tratamento especial: o comportamento padrão do
-  Pyodide no navegador já usa `window.prompt()`, nativamente acessível.
+- O Pyodide **não** liga `input()` a `window.prompt()` por padrão — sem
+  configurar isso, toda chamada a `input()` estoura `OSError: [Errno 29] I/O
+  error`. É preciso chamar `pyodide.setStdin({ stdin: () => window.prompt() })`
+  explicitamente uma vez, logo após carregar o Pyodide (feito em
+  `scripts/editor-python.js`). `window.prompt()` é nativamente acessível.
+  Clicar em "Cancelar" no prompt retorna `null`, que vira `EOFError` no
+  Python — tratar esse caso mostrando "Execução cancelada." na área de
+  saída em vez de um traceback cru.
+- A execução do Python roda sempre na thread principal da página (nunca em
+  Web Worker): rodar em Worker quebraria o `input()`, porque
+  `SharedArrayBuffer`/`Atomics.wait` (necessário para bloquear o worker
+  esperando resposta do usuário) exige os cabeçalhos
+  `Cross-Origin-Opener-Policy`/`Cross-Origin-Embedder-Policy`, que o GitHub
+  Pages não permite configurar. Os exercícios das aulas são scripts curtos,
+  sem risco real de travar a interface por tempo perceptível.
 - Esse editor só faz sentido para conteúdo de entrada/saída de texto (aulas
   1 a 8). Não tentar rodar pygame no navegador nas aulas 9 em diante — não
   resolveria acessibilidade nenhuma (o problema de "pixels sem leitura de
