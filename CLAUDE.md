@@ -149,3 +149,88 @@ aula → O que vamos ver → Exercícios (Fácil / Avançado / Pesquisa) → Des
 da semana → Nota de acessibilidade (quando houver) → Continue estudando.
 Essa estrutura vem da ementa do curso (documento de trabalho do professor,
 fora deste repositório) e deve se manter igual em todas as aulas futuras.
+
+## Padrão de exercícios (vale para toda aula a partir da Aula 2)
+
+Cada página de aula tem **13 exercícios**, divididos em dois grupos:
+
+### Grupo 1 — Exercícios essenciais (3 por aula)
+
+Refletem o conteúdo central da aula. Quem fizer só estes três já revisou o
+essencial. Cada um tem:
+- Enunciado claro, com exemplo do que a saída deveria parecer.
+- Editor Python embutido, com código inicial parcialmente preenchido
+  (nunca em branco — o aluno completa, não começa do zero).
+- Um bloco `<details>` com o resumo "Dica" (nunca a resposta pronta).
+- Link de feedback `mailto:` no padrão já definido neste arquivo.
+
+### Grupo 2 — Exercícios de prática (10 por aula)
+
+Para quem quer treinar mais, em ordem crescente de dificuldade. Cada um
+tem enunciado, editor embutido e código inicial. **Um único link de
+feedback para o grupo inteiro**, no fim da seção — não um por exercício
+(13 links de e-mail na mesma página vira ruído, principalmente na
+navegação por leitor de tela).
+
+Os 10 exercícios de prática ficam dentro de elementos `<details>`
+(recolhidos por padrão), com o título do exercício no `<summary>`. Motivo:
+mantém a página navegável e evita 13 editores abertos de uma vez. `<details>`
+é elemento nativo do HTML e já acessível por teclado e leitor de tela — não
+substituir por acordeão feito em JavaScript.
+
+No início da seção de prática, incluir uma lista de links internos
+("Sumário dos exercícios") apontando para cada um, para navegação rápida.
+
+### Regras de conteúdo dos exercícios
+
+- **Temas criativos, não matemáticos.** Evitar "calcule a média de N
+  números" como padrão. Preferir: jogos (RPG, inventário, dados, jogo da
+  velha, pontuação), histórias e aventuras de texto, situações cotidianas
+  de quem programa (fila de bugs, playlist, senha, mensagens de commit,
+  agenda), coisas absurdas e divertidas (gerador de nome de banda, desculpa
+  aleatória para bug, oráculo de decisões). Matemática só quando for o
+  ponto do exercício, nunca como tema padrão.
+- **Conteúdo acumulativo.** Cada aula reaproveita o que já foi ensinado nas
+  anteriores. A partir da Aula 3, exercícios podem e devem combinar
+  variáveis + `input`/`print` (Aula 2) com o conteúdo novo. Nunca usar
+  recurso que ainda não foi ensinado (ex.: não usar `while` antes da Aula
+  6, não usar funções definidas pelo aluno antes da Aula 7, não usar
+  `try/except` antes da Aula 12).
+- **Biblioteca `random`:** pode ser usada livremente a partir da Aula 3
+  (`random.choice`, `random.randint`, `random.shuffle`, `random.sample`).
+  Funciona perfeitamente no editor do site.
+- **Biblioteca `time`:** **não usar `time.sleep()` nos exercícios do
+  site.** O Pyodide roda na thread principal, então `sleep` congela a aba
+  inteira e o leitor de tela fica mudo durante a pausa. `time.sleep()` só
+  pode aparecer nos **desafios da semana**, que o aluno roda no Thonny
+  local. Se precisar de hora/data no site, `time.strftime()` e
+  `time.localtime()` são seguros (não pausam nada).
+- **Todos os nomes em português**, seguindo a convenção deste arquivo —
+  inclusive dentro do código dos exercícios (`vidas`, `inventario`,
+  `sortear_inimigo`).
+- **Acessibilidade do enunciado:** quando o exercício produzir saída
+  visual em "arte ASCII" ou depender de alinhamento na tela, sempre
+  oferecer uma variação em texto corrido como alternativa equivalente —
+  nunca um exercício que só faz sentido enxergando.
+
+### Padrão do desafio da semana
+
+O desafio da semana é a peça mais importante da página (vira portfólio no
+GitHub) e precisa ser **bem mais detalhado** que os exercícios. Estrutura
+fixa:
+
+1. **O que você vai construir** — descrição do projeto em 2–3 frases.
+2. **Por que isso é interessante** — uma frase ligando ao mundo real ou a
+   jogos.
+3. **Requisitos mínimos** — lista numerada e objetiva do que precisa
+   funcionar para o desafio estar completo.
+4. **Exemplo de execução** — bloco de código mostrando um diálogo real do
+   programa rodando (entrada e saída), para o aluno saber exatamente o que
+   está perseguindo.
+5. **Vá além (opcional)** — 3 a 5 ideias de incremento para quem terminar
+   rápido e quiser turbinar.
+6. **Como entregar** — nome sugerido do arquivo (em português, kebab-case),
+   e o passo a passo de subir no GitHub pela interface web.
+7. **Checklist de conclusão** — lista de itens marcáveis para o aluno
+   conferir antes de considerar pronto.
+
