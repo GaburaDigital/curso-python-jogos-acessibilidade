@@ -142,10 +142,72 @@ próprio site:
 - Ao final de cada tarefa, revisar o checklist de acessibilidade acima antes
   de considerar concluído.
 
+## Padrão de exercícios das aulas
+
+A partir da Aula 3, a seção "Exercícios" de cada aula se divide em dois
+grupos, seguidos pelo desafio da semana em formato fixo.
+
+### Exercícios essenciais
+
+- Normalmente 3, cobrindo o conteúdo central da aula (na Aula 2, eram os
+  antigos "Fácil / Avançado / Pesquisa" — mantidos como essenciais quando a
+  aula for nivelada ao novo padrão).
+- Cada um: `<h3>` com número e título, enunciado curto, uma dica recolhida
+  em `<details><summary>Dica</summary>...</details>` (sempre disponível,
+  nunca obrigatória), editor Python (`data-editor-python`) com código
+  inicial parcialmente preenchido, e bloco de feedback **individual**
+  (assunto `Aula XX - Nome do Exercicio`).
+
+### Exercícios de prática
+
+- 10 exercícios, em ordem crescente de dificuldade, cobrindo o mesmo
+  conteúdo da aula com variações de contexto (jogos, cotidiano de
+  programador, dia a dia).
+- Cada exercício fica dentro de um `<details id="exercicio-...">` recolhido
+  por padrão, com `<summary>` = número + título; dentro: enunciado e editor
+  Python com código inicial parcialmente preenchido.
+- No topo da seção, um sumário (`<ul>` de links `<a href="#exercicio-...">`)
+  apontando para o `id` de cada `<details>`, para navegação rápida por
+  teclado e leitor de tela.
+- Um único bloco de feedback no final da seção inteira (assunto
+  `Aula XX - Exercicios de Pratica`) — não um por exercício.
+
+### Desafio da semana
+
+Estrutura fixa de 7 partes, nesta ordem:
+
+1. **O que você vai construir** — um ou dois parágrafos descrevendo o
+   programa final.
+2. **Por que é interessante** — conecta o desafio a algo familiar (um app,
+   um jogo, uma ferramenta real).
+3. **Requisitos mínimos** — lista numerada do que o programa precisa fazer
+   para ser considerado completo.
+4. **Dica inicial** — em `<details>` recolhido, um empurrão para começar
+   sem entregar a solução pronta.
+5. **Vá além** — lista de extensões opcionais para quem terminar cedo ou
+   quiser se desafiar mais.
+6. **Como entregar** — nome do arquivo e instrução de publicação no
+   repositório pessoal do aluno via interface web do GitHub.
+7. **Checklist de conclusão** — lista curta e objetiva para o aluno
+   confirmar antes de considerar o desafio pronto.
+
+### Regras de conteúdo válidas para todo exercício e desafio
+
+- Nunca usar `time.sleep()` — trava a interface sem ganho pedagógico real
+  neste ambiente (execução sempre na thread principal, ver seção do
+  editor Python).
+- Nunca usar recurso de Python que a aula em questão ainda não ensinou —
+  cada aula só pode usar o que já foi apresentado nela ou em aulas
+  anteriores. Quando um exercício esbarra nesse limite (por exemplo,
+  precisar de uma decisão condicional antes de `if` ser ensinado), prefira
+  reformular o enunciado para não depender do recurso futuro, e comente no
+  próprio enunciado que uma versão melhor será possível mais adiante.
+
 ## Fonte do conteúdo pedagógico
 
 O conteúdo de cada aula segue sempre esta estrutura: Objetivos → Pílula da
-aula → O que vamos ver → Exercícios (Fácil / Avançado / Pesquisa) → Desafio
-da semana → Nota de acessibilidade (quando houver) → Continue estudando.
-Essa estrutura vem da ementa do curso (documento de trabalho do professor,
-fora deste repositório) e deve se manter igual em todas as aulas futuras.
+aula → O que vamos ver → Exercícios (essenciais + de prática, ver seção
+"Padrão de exercícios das aulas") → Desafio da semana → Nota de
+acessibilidade (quando houver) → Continue estudando. Essa estrutura vem da
+ementa do curso (documento de trabalho do professor, fora deste
+repositório) e deve se manter igual em todas as aulas futuras.

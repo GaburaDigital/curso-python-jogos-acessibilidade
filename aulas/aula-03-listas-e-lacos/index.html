@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 3 — Listas e laços for | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 3 — Listas e laços for</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Criar, acessar e modificar listas.</li>
+        <li>Usar <code>for</code> e <code>range()</code>.</li>
+        <li>Conhecer a biblioteca <code>random</code>.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula</h2>
+      <p>
+        O que é uma "estrutura de dados", em uma frase simples: é um jeito
+        de organizar informação para o computador usar de forma eficiente —
+        e a lista é a primeira e mais simples delas que vamos aprender.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>O que é uma lista.</li>
+        <li>Índices — e por que começam em zero.</li>
+        <li>
+          <code>append()</code>, <code>remove()</code>, <code>len()</code>.
+        </li>
+        <li>Percorrer uma lista com <code>for</code>.</li>
+        <li><code>range()</code>.</li>
+        <li>
+          Sortear com <code>random.choice()</code> e
+          <code>random.randint()</code>.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-essenciais">
+      <h2 id="titulo-exercicios-essenciais">Exercícios essenciais</h2>
+
+      <section aria-labelledby="titulo-exercicio-inventario">
+        <h3 id="titulo-exercicio-inventario">
+          Exercício 1 — Inventário do herói
+        </h3>
+        <p>
+          Crie uma lista com 3 itens iniciais de um personagem, adicione um
+          item novo que a pessoa digitar, remova um item e imprima o
+          inventário final numerado.
+        </p>
+
+        <details class="dica">
+          <summary>Dica</summary>
+          <p>
+            Para numerar os itens, crie uma variável <code>contador = 1</code>
+            antes do <code>for</code>, imprima
+            <code>str(contador) + ". " + item</code> dentro do laço, e some 1
+            ao contador a cada volta (<code>contador = contador + 1</code>).
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-inventario">Seu código:</label>
+          <textarea id="codigo-inventario" class="editor-python__codigo" rows="10">inventario = ["espada", "escudo", "pocao de vida"]
+
+novo_item = input("Que item voce quer adicionar ao inventario? ")
+inventario.append(novo_item)
+
+# remova um item do inventario aqui (por exemplo, inventario.remove("escudo"))
+
+print("Inventario final:")
+# use um for para imprimir cada item numerado, por exemplo "1. espada"</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 03 - Exercicio Inventario do Heroi">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-sorteio">
+        <h3 id="titulo-exercicio-sorteio">Exercício 2 — Sorteio de inimigo</h3>
+        <p>
+          A partir de uma lista de nomes de inimigos, use
+          <code>random.choice()</code> para sortear qual aparece, e
+          <code>random.randint()</code> para definir quantos pontos de vida
+          ele tem. Imprima o encontro.
+        </p>
+
+        <details class="dica">
+          <summary>Dica</summary>
+          <p>
+            Você pode juntar texto e número com <code>+</code>, desde que
+            converta o número para texto primeiro com
+            <code>str(pontos_de_vida)</code>. Por exemplo:
+            <code
+              >print("Um " + inimigo_sorteado + " apareceu com " +
+              str(pontos_de_vida) + " pontos de vida!")</code
+            >
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-sorteio-de-inimigo">Seu código:</label>
+          <textarea id="codigo-sorteio-de-inimigo" class="editor-python__codigo" rows="9">import random
+
+inimigos = ["goblin", "orc", "dragao filhote"]
+
+inimigo_sorteado = random.choice(inimigos)
+pontos_de_vida = random.randint(10, 100)
+
+# imprima uma mensagem descrevendo o encontro, usando inimigo_sorteado e pontos_de_vida</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 03 - Exercicio Sorteio de Inimigo">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-contagem">
+        <h3 id="titulo-exercicio-contagem">
+          Exercício 3 — Contagem regressiva do lançamento
+        </h3>
+        <p>
+          Use <code>for</code> com <code>range()</code> para imprimir uma
+          contagem de 10 até 1, terminando com uma mensagem de lançamento.
+          (Sem <code>time.sleep()</code>.)
+        </p>
+
+        <details class="dica">
+          <summary>Dica</summary>
+          <p>
+            <code>range(10, 0, -1)</code> começa em 10 e vai diminuindo de 1
+            em 1 até passar de 0 (sem incluir o 0) — é por isso que a
+            contagem termina em 1, não em 0.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-contagem-regressiva">Seu código:</label>
+          <textarea id="codigo-contagem-regressiva" class="editor-python__codigo" rows="6">for numero in range(10, 0, -1):
+    print(numero)
+
+# escreva aqui o print() com a mensagem de lancamento (por exemplo, "Lancamento!")</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 03 - Exercicio Contagem Regressiva">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-pratica">
+      <h2 id="titulo-exercicios-pratica">Exercícios de prática</h2>
+      <p>
+        Dez exercícios curtos, em ordem crescente de dificuldade, para
+        praticar mais o conteúdo desta aula. Cada um abre em uma caixa
+        recolhida — clique ou dê Enter no título para abrir.
+      </p>
+
+      <nav class="sumario-de-exercicios" aria-label="Lista dos exercícios de prática">
+        <p>Ir direto para:</p>
+        <ol>
+          <li><a href="#exercicio-playlist-da-madrugada">Playlist da madrugada</a></li>
+          <li><a href="#exercicio-gerador-de-nome-de-banda">Gerador de nome de banda</a></li>
+          <li><a href="#exercicio-chamada-da-turma">Chamada da turma</a></li>
+          <li><a href="#exercicio-desculpa-aleatoria">Desculpa aleatória para o bug</a></li>
+          <li><a href="#exercicio-fila-de-bugs">Fila de bugs</a></li>
+          <li><a href="#exercicio-dado-de-rpg">Dado de RPG</a></li>
+          <li><a href="#exercicio-baralho-embaralhado">Baralho embaralhado</a></li>
+          <li><a href="#exercicio-mochila-com-limite">Mochila com limite</a></li>
+          <li><a href="#exercicio-tabela-de-pontuacao">Tabela de pontuação do torneio</a></li>
+          <li><a href="#exercicio-oraculo-do-commit">Oráculo do commit</a></li>
+        </ol>
+      </nav>
+
+      <details class="exercicio-de-pratica" id="exercicio-playlist-da-madrugada">
+        <summary>1. Playlist da madrugada</summary>
+        <p>
+          Monte uma lista de músicas, imprima quantas são e qual é a
+          primeira e a última.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-playlist">Seu código:</label>
+          <textarea id="codigo-playlist" class="editor-python__codigo" rows="5">playlist = ["Lo-fi Beats", "Chuva na Janela", "Cafe da Meia-Noite"]
+
+print("Quantidade de musicas: " + str(len(playlist)))
+# imprima a primeira musica (indice 0) e a ultima musica (indice -1) aqui</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-gerador-de-nome-de-banda">
+        <summary>2. Gerador de nome de banda</summary>
+        <p>
+          Com duas listas (adjetivos e substantivos), sorteie uma palavra
+          de cada e junte num nome de banda.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-nome-de-banda">Seu código:</label>
+          <textarea id="codigo-nome-de-banda" class="editor-python__codigo" rows="6">import random
+
+adjetivos = ["Eletrico", "Silencioso", "Cosmico"]
+substantivos = ["Lobo", "Foguete", "Codigo"]
+
+# sorteie um adjetivo e um substantivo com random.choice() e junte num nome de banda</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-chamada-da-turma">
+        <summary>3. Chamada da turma</summary>
+        <p>
+          Percorra uma lista de nomes com <code>for</code> e imprima
+          "Presente!" ao lado de cada um.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-chamada-da-turma">Seu código:</label>
+          <textarea id="codigo-chamada-da-turma" class="editor-python__codigo" rows="4">turma = ["Ana", "Bruno", "Carla"]
+
+# use um for para percorrer turma e imprimir "NOME - Presente!" para cada pessoa</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-desculpa-aleatoria">
+        <summary>4. Desculpa aleatória para o bug</summary>
+        <p>
+          Monte uma lista de desculpas clássicas de programador ("funciona
+          na minha máquina"...), sorteie uma e imprima.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-desculpa">Seu código:</label>
+          <textarea id="codigo-desculpa" class="editor-python__codigo" rows="8">import random
+
+desculpas = [
+    "Funciona na minha maquina",
+    "Deve ser cache",
+    "Isso nao deveria estar acontecendo",
+]
+
+# sorteie uma desculpa com random.choice() e imprima</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-fila-de-bugs">
+        <summary>5. Fila de bugs</summary>
+        <p>
+          Adicione bugs à lista, remova o primeiro (resolvido) e mostre
+          quantos sobraram.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-fila-de-bugs">Seu código:</label>
+          <textarea id="codigo-fila-de-bugs" class="editor-python__codigo" rows="6">bugs = ["Botao nao clica", "Tela pisca", "Som nao toca"]
+
+primeiro_bug = bugs[0]
+# remova primeiro_bug da lista com bugs.remove(primeiro_bug)
+
+# depois, imprima quantos bugs sobraram, usando len()</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-dado-de-rpg">
+        <summary>6. Dado de RPG</summary>
+        <p>
+          Role 5 dados de 6 lados com <code>random.randint()</code>, guarde
+          os resultados numa lista e imprima todos.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-dado-de-rpg">Seu código:</label>
+          <textarea id="codigo-dado-de-rpg" class="editor-python__codigo" rows="8">import random
+
+resultados = []
+
+# use um for repetido 5 vezes (for _ in range(5):) para rolar um dado de 6 lados
+# com random.randint(1, 6) e guardar cada resultado em resultados com append()
+
+# depois, use outro for para imprimir cada resultado em uma linha separada</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-baralho-embaralhado">
+        <summary>7. Baralho embaralhado</summary>
+        <p>
+          Crie uma lista de cartas, use <code>random.shuffle()</code> e
+          imprima as 3 primeiras da mão.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-baralho">Seu código:</label>
+          <textarea id="codigo-baralho" class="editor-python__codigo" rows="7">import random
+
+baralho = ["A de Copas", "2 de Copas", "3 de Copas", "4 de Copas", "5 de Copas"]
+
+random.shuffle(baralho)
+
+# imprima as 3 primeiras cartas da mao (indices 0, 1 e 2), uma por linha</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-mochila-com-limite">
+        <summary>8. Mochila com limite</summary>
+        <p>
+          Com uma lista de itens, use <code>len()</code> para avisar se o
+          personagem passou do limite de 5 itens carregados.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-mochila">Seu código:</label>
+          <textarea id="codigo-mochila" class="editor-python__codigo" rows="9">mochila = ["corda", "lanterna", "mapa", "comida", "agua", "kit de primeiros socorros"]
+limite = 5
+
+quantidade = len(mochila)
+excesso = quantidade - limite
+
+# imprima a quantidade de itens na mochila e o valor de excesso
+# (se excesso for negativo, a mochila ainda esta dentro do limite - uma
+# versao com aviso mais elegante fica facil quando aprendermos "if", na Aula 4)</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-tabela-de-pontuacao">
+        <summary>9. Tabela de pontuação do torneio</summary>
+        <p>
+          Com duas listas paralelas (jogadores e pontos), percorra com
+          <code>for</code> e <code>range(len(...))</code> imprimindo cada
+          jogador com sua pontuação, um por linha.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-tabela-de-pontuacao">Seu código:</label>
+          <textarea id="codigo-tabela-de-pontuacao" class="editor-python__codigo" rows="6">jogadores = ["Ana", "Bruno", "Carla"]
+pontos = [15, 22, 9]
+
+# use for numero in range(len(jogadores)): para percorrer as duas listas ao mesmo tempo
+# e imprima "NOME: PONTOS" para cada jogador, um por linha</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-oraculo-do-commit">
+        <summary>10. Oráculo do commit</summary>
+        <p>
+          Sorteie uma mensagem de commit absurda a partir de listas
+          combinadas (verbo + objeto + justificativa duvidosa), gerando
+          uma frase diferente a cada execução.
+        </p>
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-oraculo-do-commit">Seu código:</label>
+          <textarea id="codigo-oraculo-do-commit" class="editor-python__codigo" rows="8">import random
+
+verbos = ["Corrige", "Refatora", "Ajusta", "Remove"]
+objetos = ["o bug misterioso", "a funcao principal", "aquele comentario estranho"]
+justificativas = ["porque sim", "por motivos ainda desconhecidos", "e reza para funcionar"]
+
+# sorteie um item de cada lista com random.choice() e junte numa frase de commit</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <p class="bloco-feedback" data-assunto="Aula 03 - Exercicios de Pratica">
+        Alguma dúvida ou quer comentar sobre algum destes exercícios de
+        prática?
+        <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+        (no assunto que abrir, acrescente seu nome e diga qual exercício) —
+        ou copie o endereço diretamente:
+        <strong class="bloco-feedback__endereco"></strong>
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">Desafio da semana — Agenda de contatos</h2>
+
+      <h3>O que você vai construir</h3>
+      <p>
+        Uma agenda de contatos em texto, que começa com alguns nomes já
+        cadastrados, permite adicionar novos contatos digitados por você e
+        imprime a lista completa numerada no final.
+      </p>
+
+      <h3>Por que é interessante</h3>
+      <p>
+        É o mesmo princípio de qualquer app de contatos do celular —
+        guardar uma coleção de informações e conseguir percorrê-la depois.
+        Toda vez que um app mostra uma lista (contatos, mensagens,
+        músicas), por trás tem uma lista guardando essas informações,
+        exatamente como a que você vai construir aqui.
+      </p>
+
+      <h3>Requisitos mínimos</h3>
+      <ol>
+        <li>Começar com uma lista de pelo menos 3 contatos.</li>
+        <li>Pedir 3 novos contatos usando <code>input()</code>.</li>
+        <li>Adicionar cada um com <code>append()</code>.</li>
+        <li>
+          Imprimir a agenda inteira numerada, um contato por linha, usando
+          <code>for</code>.
+        </li>
+        <li>Mostrar no final quantos contatos existem no total.</li>
+      </ol>
+
+      <details class="dica">
+        <summary>Dica inicial</summary>
+        <p>
+          Comece só com os requisitos 1, 2 e 3 funcionando (a lista
+          crescendo), teste, e só depois se preocupe em numerar a
+          impressão. Um contador que soma 1 a cada volta do <code>for</code>
+          funciona bem para numerar, igual ao Exercício 1 desta aula.
+        </p>
+      </details>
+
+      <h3>Vá além</h3>
+      <ul>
+        <li>Permitir remover um contato pelo nome.</li>
+        <li>
+          Sortear um contato aleatório com <code>random.choice()</code>
+          sugerindo para quem mandar mensagem hoje.
+        </li>
+        <li>Guardar também o telefone em uma segunda lista paralela.</li>
+        <li>Ordenar a agenda em ordem alfabética com <code>sort()</code>.</li>
+        <li>
+          Imprimir só os contatos cujo nome começa com uma letra escolhida
+          por você.
+        </li>
+      </ul>
+
+      <h3>Como entregar</h3>
+      <p>
+        Arquivo <code>agenda-de-contatos.py</code>, publicado no seu
+        repositório pessoal pela interface web do GitHub.
+      </p>
+
+      <h3>Checklist de conclusão</h3>
+      <ul>
+        <li>Rodou sem erro do começo ao fim.</li>
+        <li>
+          Usa pelo menos uma lista, um <code>for</code> e um
+          <code>input</code>.
+        </li>
+        <li>A saída fica compreensível se lida em voz alta linha por linha.</li>
+        <li>O arquivo está no GitHub.</li>
+      </ul>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Ao imprimir listas, prefira uma informação por linha em vez de
+        tabelas alinhadas com espaços — leitor de tela lê linha a linha, e
+        colunas alinhadas viram confusão. Vale como boa prática para todo
+        mundo, não só para quem usa leitor de tela.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/introduction.html#lists">
+            Tutorial de Python — Listas
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/datastructures.html">
+            Tutorial de Python — Estruturas de dados
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/library/random.html">
+            Documentação do módulo random
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a href="mailto:professor@substituir.com.br">professor@substituir.com.br</a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>
