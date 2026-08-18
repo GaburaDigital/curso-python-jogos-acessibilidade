@@ -77,6 +77,30 @@ img {
   max-width: 100%;
 }
 
+code {
+  font-family: var(--fonte-monoespacada);
+  background-color: var(--cor-fundo-elevado);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+}
+
+pre {
+  font-family: var(--fonte-monoespacada);
+  background-color: var(--cor-fundo-terminal);
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.75rem 0 1.25rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
 /* -----------------------------------------------------------------
    Foco de teclado sempre visivel
 ----------------------------------------------------------------- */
@@ -85,6 +109,7 @@ a:focus-visible,
 button:focus-visible,
 textarea:focus-visible,
 input:focus-visible,
+summary:focus-visible,
 [tabindex]:focus-visible {
   outline: 3px solid var(--cor-destaque);
   outline-offset: 2px;
@@ -335,6 +360,71 @@ main {
   margin: 0 0 2rem;
   background-color: var(--cor-fundo-elevado);
   max-width: none;
+}
+
+/* -----------------------------------------------------------------
+   Dica recolhida (exercicios essenciais e desafio da semana)
+----------------------------------------------------------------- */
+
+.dica {
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0 1.25rem;
+  background-color: var(--cor-fundo-elevado);
+}
+
+.dica summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--cor-destaque);
+}
+
+.dica[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+/* -----------------------------------------------------------------
+   Sumario de links dos exercicios de pratica
+----------------------------------------------------------------- */
+
+.sumario-de-exercicios {
+  padding: 1rem 1.25rem;
+  margin: 1rem 0 1.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  background-color: var(--cor-fundo-elevado);
+}
+
+.sumario-de-exercicios ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.sumario-de-exercicios li {
+  margin-bottom: 0.35rem;
+}
+
+/* -----------------------------------------------------------------
+   Exercicio de pratica (details recolhido)
+----------------------------------------------------------------- */
+
+.exercicio-de-pratica {
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1.25rem;
+  background-color: var(--cor-fundo-elevado);
+}
+
+.exercicio-de-pratica summary {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.exercicio-de-pratica[open] summary {
+  margin-bottom: 0.75rem;
 }
 
 /* -----------------------------------------------------------------

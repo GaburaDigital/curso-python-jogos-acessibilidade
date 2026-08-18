@@ -234,3 +234,19 @@ fixa:
 7. **Checklist de conclusão** — lista de itens marcáveis para o aluno
    conferir antes de considerar pronto.
 
+### Convenções técnicas de marcação
+
+Detalhes de HTML/CSS que implementam as regras acima, usados desde a Aula 3
+e mantidos daqui para frente:
+
+- Cada exercício essencial é um `<h3>` numerado ("Exercício N — Título"),
+  seguido do enunciado, da dica em `<details>` e do editor
+  (`data-editor-python`).
+- Cada exercício de prática é um `<details id="exercicio-nome-do-exercicio">`
+  (id em kebab-case, sem numeral), com `<summary>` = número + título.
+- O "Sumário dos exercícios" no topo da seção de prática é uma lista de
+  âncoras `<a href="#exercicio-...">` apontando para o `id` de cada
+  `<details>`.
+- Assunto do e-mail de feedback: exercícios essenciais usam
+  `Aula XX - Nome do Exercicio` (um por exercício); exercícios de prática
+  usam um único `Aula XX - Exercicios de Pratica` para o grupo inteiro.
