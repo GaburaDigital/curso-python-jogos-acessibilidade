@@ -77,6 +77,30 @@ img {
   max-width: 100%;
 }
 
+code {
+  font-family: var(--fonte-monoespacada);
+  background-color: var(--cor-fundo-elevado);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+}
+
+pre {
+  font-family: var(--fonte-monoespacada);
+  background-color: var(--cor-fundo-terminal);
+  border: 1px solid var(--cor-borda);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0.75rem 0 1.25rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
 /* -----------------------------------------------------------------
    Foco de teclado sempre visivel
 ----------------------------------------------------------------- */
