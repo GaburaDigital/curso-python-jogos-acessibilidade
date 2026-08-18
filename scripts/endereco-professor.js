@@ -1,6 +1,5 @@
 // Endereco de e-mail do professor, centralizado em um unico lugar.
-// Ate o professor informar o endereco definitivo, usamos um placeholder.
-const ENDERECO_PROFESSOR = "professor@substituir.com.br";
+const ENDERECO_PROFESSOR = "gabura.nogueira@idm.org.br";
 
 function montarBlocosFeedback() {
   const blocos = document.querySelectorAll(".bloco-feedback[data-assunto]");
@@ -22,4 +21,16 @@ function montarBlocosFeedback() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", montarBlocosFeedback);
+function montarContatoDoProfessor() {
+  const links = document.querySelectorAll(".contato-do-professor");
+
+  links.forEach(function (link) {
+    link.href = "mailto:" + ENDERECO_PROFESSOR;
+    link.textContent = ENDERECO_PROFESSOR;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  montarBlocosFeedback();
+  montarContatoDoProfessor();
+});
