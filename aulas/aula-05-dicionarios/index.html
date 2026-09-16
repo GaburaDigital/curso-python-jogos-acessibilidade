@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 5 — Dicionários | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 5 — Dicionários</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Criar e usar dicionários (pares chave-valor).</li>
+        <li>Acessar, adicionar, modificar e remover itens.</li>
+        <li>
+          Percorrer com <code>.items()</code>, <code>.keys()</code> e
+          <code>.values()</code>.
+        </li>
+        <li>Usar <code>.get()</code>.</li>
+        <li>Aninhar listas e dicionários.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula — o que é uma API</h2>
+      <p>
+        Pense no cardápio de um restaurante. Você pede um prato pelo nome,
+        e a comida chega — sem que você precise saber como a cozinha
+        funciona por dentro, quem cortou a cebola ou qual panela foi usada.
+        O cardápio é o contrato: uma lista de coisas que você pode pedir e
+        do que recebe em troca.
+      </p>
+      <p>
+        Uma API é exatamente isso, entre programas: um cardápio de coisas
+        que um programa sabe fazer, que outro programa pode pedir pelo nome.
+        E adivinhe em que formato essas respostas costumam chegar — algo
+        muito parecido com o dicionário que vamos aprender hoje.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>O dicionário como "ficha" de um objeto.</li>
+        <li>
+          A diferença entre lista (acesso por posição) e dicionário (acesso
+          por nome).
+        </li>
+        <li>
+          O <code>KeyError</code> e como evitá-lo, com <code>.get()</code>
+          ou com <code>in</code>.
+        </li>
+        <li>Lista de dicionários.</li>
+        <li>Dicionário de dicionários.</li>
+      </ul>
+    </section>
+
+    <section
+      class="bloco-ficou-travado"
+      aria-labelledby="titulo-ficou-travado"
+    >
+      <h2 id="titulo-ficou-travado">Ficou travado?</h2>
+      <p>Cinco erros que pegam quase todo mundo nesta aula:</p>
+      <ol>
+        <li>
+          <strong><code>KeyError</code></strong> significa que a chave não
+          existe. Confira a grafia e as maiúsculas — <code>"Vida"</code> e
+          <code>"vida"</code> são chaves diferentes.
+        </li>
+        <li>
+          <strong>Dicionário usa chaves <code>{}</code>;</strong> lista usa
+          colchetes <code>[]</code>. Trocar um pelo outro na hora de criar é
+          o erro mais comum do dia.
+        </li>
+        <li>
+          <strong>Para acessar, use <code>dicionario["chave"]</code>,</strong>
+          não <code>dicionario[0]</code>. Dicionário não tem posição: tem
+          nome.
+        </li>
+        <li>
+          <strong><code>.items()</code> devolve duas coisas por vez,</strong>
+          então o <code>for</code> precisa de duas variáveis:
+          <code>for chave, valor in ficha.items():</code>
+        </li>
+        <li>
+          <strong>Esquecer as aspas na chave de texto</strong> vira
+          <code>NameError</code>: <code>ficha[nome]</code> procura uma
+          variável chamada <code>nome</code>;
+          <code>ficha["nome"]</code> procura a chave.
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-essenciais">
+      <h2 id="titulo-exercicios-essenciais">Exercícios essenciais</h2>
+      <p>
+        Três exercícios que cobrem o coração da aula. Quem fizer só estes
+        já revisou o essencial.
+      </p>
+
+      <section aria-labelledby="titulo-exercicio-ficha-do-personagem">
+        <h3 id="titulo-exercicio-ficha-do-personagem">
+          Exercício 1 — Ficha do personagem
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · criar e acessar · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_01_ficha_do_personagem.py</span>
+        </p>
+        <p>
+          Monte um dicionário com nome, classe, vida e nível de um
+          personagem. Imprima cada informação em uma linha, no formato
+          "Chave: valor".
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Nome: Arya
+Classe: ladina
+Vida: 80
+Nível: 7</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Acesse cada valor pelo nome da chave, entre aspas e colchetes:
+            <code>personagem["nome"]</code>. Números precisam de
+            <code>str()</code> para entrar na mesma frase que o texto.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-ficha-do-personagem">Seu código:</label>
+          <textarea id="codigo-ficha-do-personagem" class="editor-python__codigo" rows="11">personagem = {
+    "nome": "Arya",
+    "classe": "ladina",
+    "vida": 80,
+    "nivel": 7,
+}
+
+print("Nome: " + personagem["nome"])
+# Imprima também a classe, a vida e o nível, uma informação por linha.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 05 - Exercicio Ficha do Personagem">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-mochila">
+        <h3 id="titulo-exercicio-mochila">
+          Exercício 2 — O que tem na mochila
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · percorrer com <code>.items()</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_02_o_que_tem_na_mochila.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga cada item a uma quantidade, percorra
+          com <code>for</code> imprimindo uma linha por item. Depois, peça
+          um item novo ao usuário, acrescente ao dicionário e imprima a
+          mochila de novo.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Na sua mochila:
+poção de vida: 3
+flecha: 12
+corda: 1
+
+Que item você quer guardar na mochila? tocha
+
+Agora na sua mochila:
+poção de vida: 3
+flecha: 12
+corda: 1
+tocha: 1</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>for item, quantidade in mochila.items():</code> — duas
+            variáveis, porque <code>.items()</code> entrega duas coisas por
+            vez: a chave e o valor.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-mochila">Seu código:</label>
+          <textarea id="codigo-mochila" class="editor-python__codigo" rows="13">mochila = {
+    "poção de vida": 3,
+    "flecha": 12,
+    "corda": 1,
+}
+
+print("Na sua mochila:")
+for item, quantidade in mochila.items():
+    print(item + ": " + str(quantidade))
+
+item_novo = input("Que item você quer guardar na mochila? ")
+# Acrescente o item novo ao dicionário e imprima a mochila de novo.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 05 - Exercicio O Que Tem na Mochila">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-alienigena">
+        <h3 id="titulo-exercicio-alienigena">
+          Exercício 3 — Alienígena que evolui
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · modificar valores · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_03_alienigena_que_evolui.py</span>
+        </p>
+        <p>
+          Monte um dicionário representando um alienígena (cor, velocidade,
+          pontos). Modifique os valores conforme ele evolui e imprima a
+          ficha antes e depois. Este exercício faz ponte direta com o jogo
+          Invasão Alienígena, que a turma constrói a partir da Aula 9.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Ficha antes da evolução:
+cor: verde
+velocidade: 1
+pontos: 10
+
+Ficha depois da evolução:
+cor: vermelha
+velocidade: 3
+pontos: 50</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Para mudar um valor, basta atribuir de novo:
+            <code>alienigena["velocidade"] = 3</code>. A chave já existe,
+            então o valor antigo é substituído.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-alienigena">Seu código:</label>
+          <textarea id="codigo-alienigena" class="editor-python__codigo" rows="14">alienigena = {
+    "cor": "verde",
+    "velocidade": 1,
+    "pontos": 10,
+}
+
+print("Ficha antes da evolução:")
+for caracteristica, valor in alienigena.items():
+    print(caracteristica + ": " + str(valor))
+
+# Faça o alienígena evoluir: mude a cor, aumente a velocidade e os pontos.
+
+# Imprima a ficha depois da evolução.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 05 - Exercicio Alienigena Que Evolui">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-pratica">
+      <h2 id="titulo-exercicios-pratica">Exercícios de prática</h2>
+      <p>
+        Dez exercícios curtos, em ordem crescente de dificuldade, para
+        praticar mais o conteúdo desta aula. Cada um abre em uma caixa
+        recolhida — clique ou dê Enter no título para abrir.
+      </p>
+
+      <nav class="sumario-de-exercicios" aria-label="Sumário dos exercícios de prática">
+        <p>Ir direto para:</p>
+        <ol>
+          <li><a href="#exercicio-tradutor-de-girias">Tradutor de gírias de programador (fácil)</a></li>
+          <li><a href="#exercicio-placar-do-torneio">Placar do torneio (fácil)</a></li>
+          <li><a href="#exercicio-chave-que-nao-existe">Chave que não existe (fácil)</a></li>
+          <li><a href="#exercicio-loja-de-pocoes">Loja de poções (fácil)</a></li>
+          <li><a href="#exercicio-cadastro-de-saves">Cadastro de saves (médio)</a></li>
+          <li><a href="#exercicio-contando-itens-repetidos">Contando itens repetidos (médio)</a></li>
+          <li><a href="#exercicio-mochila-com-lista-dentro">Mochila com lista dentro (médio)</a></li>
+          <li><a href="#exercicio-party-de-rpg">Party de RPG (médio)</a></li>
+          <li><a href="#exercicio-catalogo-de-jogos">Catálogo de jogos (médio)</a></li>
+          <li><a href="#exercicio-gerador-de-encontro">Gerador de encontro aleatório (avançado)</a></li>
+        </ol>
+      </nav>
+
+      <details class="exercicio-de-pratica" id="exercicio-tradutor-de-girias">
+        <summary>
+          1. Tradutor de gírias de programador
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>.items()</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_04_tradutor_de_girias.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga cada termo ao seu significado, imprima
+          todos usando <code>for</code> e <code>.items()</code>.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Uma linha por termo funciona muito melhor em voz alta do que
+            uma tabela alinhada com espaços.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-tradutor-de-girias">Seu código:</label>
+          <textarea id="codigo-tradutor-de-girias" class="editor-python__codigo" rows="10">girias = {
+    "gambiarra": "solução improvisada que funciona (por enquanto)",
+    "deploy": "colocar o programa no ar, para as pessoas usarem",
+    "bug": "erro no programa",
+    "commit": "salvar uma versão do código no histórico do projeto",
+}
+
+# Use for e .items() para imprimir cada termo com o significado, um por linha.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-placar-do-torneio">
+        <summary>
+          2. Placar do torneio
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          modificar valores · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_05_placar_do_torneio.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga cada jogador à sua pontuação, some
+          pontos a um jogador que já existe e reimprima o placar.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>placar["Ana"] = placar["Ana"] + 10</code> — o Python
+            primeiro lê o valor que está lá, soma, e guarda de volta na
+            mesma chave.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-placar-do-torneio">Seu código:</label>
+          <textarea id="codigo-placar-do-torneio" class="editor-python__codigo" rows="8">placar = {"Ana": 40, "Bruno": 25, "Carla": 33}
+
+# Ana marcou mais 10 pontos: some esses pontos ao valor que já existe.
+
+print("Placar do torneio:")
+for jogador, pontos in placar.items():
+    print(jogador + ": " + str(pontos) + " pontos")</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-chave-que-nao-existe">
+        <summary>
+          3. Chave que não existe
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>.get()</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_06_chave_que_nao_existe.py</span>
+        </p>
+        <p>
+          Consulte um item do inventário que pode não estar lá, sem quebrar
+          o programa. Compare o que acontece com
+          <code>dicionario["chave"]</code> e com <code>.get()</code>.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>.get()</code> devolve <code>None</code> em vez de dar
+            erro — e você pode passar um valor padrão:
+            <code>inventario.get("escudo", 0)</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-chave-que-nao-existe">Seu código:</label>
+          <textarea id="codigo-chave-que-nao-existe" class="editor-python__codigo" rows="10">inventario = {"espada": 1, "poção de vida": 3}
+
+# .get() devolve None em vez de dar erro quando a chave não existe:
+print(inventario.get("escudo"))
+
+# Agora use .get() com um valor padrão para o escudo (por exemplo, 0).
+
+# Tire o # da linha abaixo para ver o KeyError acontecer - e ponha de volta depois.
+# print(inventario["escudo"])</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-loja-de-pocoes">
+        <summary>
+          4. Loja de poções
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          dicionário + <code>if</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_07_loja_de_pocoes.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga cada item ao seu preço, pergunte o que
+          a pessoa quer comprar e responda com o preço — ou avise que não
+          há em estoque. Normalize a resposta com
+          <code>.strip().lower()</code>.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use <code>in</code> para checar se a chave existe antes de
+            acessar: <code>if pedido in loja:</code>
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-loja-de-pocoes">Seu código:</label>
+          <textarea id="codigo-loja-de-pocoes" class="editor-python__codigo" rows="12">loja = {
+    "poção de vida": 30,
+    "poção de mana": 45,
+    "antídoto": 20,
+}
+
+pedido = input("Qual poção você quer comprar? ")
+pedido = pedido.strip().lower()
+
+# Use if pedido in loja: para responder com o preço.
+# No else, avise que não há essa poção em estoque.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-cadastro-de-saves">
+        <summary>
+          5. Cadastro de saves
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>for</code> + <code>if</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_08_cadastro_de_saves.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga o nome de cada save ao nível
+          alcançado, pergunte um nível mínimo e imprima só os saves acima
+          dele.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Este exercício combina o <code>for</code> da Aula 3 com o
+            <code>if</code> da Aula 4: o <code>if</code> vai dentro do
+            laço, decidindo se aquela linha é impressa ou não.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-cadastro-de-saves">Seu código:</label>
+          <textarea id="codigo-cadastro-de-saves" class="editor-python__codigo" rows="9">saves = {"Save 1": 12, "Save 2": 3, "Save 3": 27, "Save 4": 8}
+
+nivel_minimo = int(input("Mostrar saves a partir de qual nível? "))
+
+for nome_do_save, nivel in saves.items():
+    # Use if para imprimir só os saves com nível maior ou igual ao mínimo.
+    print(nome_do_save + ": nível " + str(nivel))</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-contando-itens-repetidos">
+        <summary>
+          6. Contando itens repetidos
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          montar dicionário a partir de lista · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_09_contando_itens_repetidos.py</span>
+        </p>
+        <p>
+          A partir de uma lista com repetições, monte um dicionário que
+          ligue cada item à quantidade de vezes que ele aparece,
+          percorrendo a lista com <code>for</code>.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Para cada item: se ele já estiver no dicionário, some 1 ao que
+            está lá; se não estiver, comece em 1. O <code>in</code> da Aula
+            4 responde essa pergunta.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-contando-itens-repetidos">Seu código:</label>
+          <textarea id="codigo-contando-itens-repetidos" class="editor-python__codigo" rows="11">moedas_coletadas = ["ouro", "prata", "ouro", "bronze", "ouro", "prata"]
+
+contagem = {}
+
+for moeda in moedas_coletadas:
+    # Se a moeda já estiver em contagem, some 1.
+    # Se não estiver, comece em 1.
+    print("Contando: " + moeda)
+
+# Imprima o resultado final, uma linha por tipo de moeda.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-mochila-com-lista-dentro">
+        <summary>
+          7. Mochila com lista dentro
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          aninhamento · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_10_mochila_com_lista_dentro.py</span>
+        </p>
+        <p>
+          Monte um dicionário de personagem com uma chave
+          <code>"itens"</code> cujo valor é uma lista. Adicione itens à
+          lista de dentro e imprima tudo.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>personagem["itens"].append("corda")</code> — primeiro
+            você pega a lista que está dentro do dicionário, depois usa o
+            <code>append()</code> nela.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-mochila-com-lista-dentro">Seu código:</label>
+          <textarea id="codigo-mochila-com-lista-dentro" class="editor-python__codigo" rows="12">personagem = {
+    "nome": "Kai",
+    "classe": "explorador",
+    "itens": ["lanterna", "mapa"],
+}
+
+personagem["itens"].append("corda")
+
+# Acrescente mais um item à lista de dentro.
+
+# Imprima o nome, a classe e depois cada item da lista, um por linha.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-party-de-rpg">
+        <summary>
+          8. Party de RPG
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          lista de dicionários · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_11_party_de_rpg.py</span>
+        </p>
+        <p>
+          Com uma lista contendo vários dicionários de personagens,
+          percorra com <code>for</code> e imprima a ficha de cada um.
+          Depois, use <code>if</code> para listar só quem está com a vida
+          abaixo de um limite.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Dentro do <code>for</code>, cada item da lista é um dicionário
+            inteiro — então você acessa com
+            <code>personagem["nome"]</code>, como sempre.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-party-de-rpg">Seu código:</label>
+          <textarea id="codigo-party-de-rpg" class="editor-python__codigo" rows="13">party = [
+    {"nome": "Arya", "classe": "ladina", "vida": 80},
+    {"nome": "Kai", "classe": "explorador", "vida": 35},
+    {"nome": "Mira", "classe": "maga", "vida": 60},
+]
+
+for personagem in party:
+    print("Nome: " + personagem["nome"])
+    # Imprima também a classe e a vida deste personagem.
+
+# Depois, use outro for com if para listar só quem está com vida abaixo de 50.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-catalogo-de-jogos">
+        <summary>
+          9. Catálogo de jogos
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          dicionário de dicionários · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_12_catalogo_de_jogos.py</span>
+        </p>
+        <p>
+          Com um dicionário que liga o nome de cada jogo a outro dicionário
+          (gênero, nota e plataforma), imprima o catálogo inteiro de forma
+          organizada, uma informação por linha. Depois, descubra qual jogo
+          tem a maior nota.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>catalogo["Hollow Knight"]["nota"]</code> — dois
+            colchetes, um para cada nível. Para achar a maior nota, guarde
+            a maior encontrada até agora numa variável e vá comparando
+            dentro do <code>for</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-catalogo-de-jogos">Seu código:</label>
+          <textarea id="codigo-catalogo-de-jogos" class="editor-python__codigo" rows="15">catalogo = {
+    "Hollow Knight": {"genero": "metroidvania", "nota": 9.5, "plataforma": "PC"},
+    "Celeste": {"genero": "plataforma", "nota": 9.0, "plataforma": "Switch"},
+    "Hades": {"genero": "roguelike", "nota": 9.3, "plataforma": "PC"},
+}
+
+for nome_do_jogo, ficha in catalogo.items():
+    print(nome_do_jogo)
+    print("Gênero: " + ficha["genero"])
+    # Imprima também a nota e a plataforma, uma por linha.
+
+# Descubra qual jogo tem a maior nota:
+# guarde a maior nota e o nome do jogo em variáveis e vá comparando dentro do for.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-gerador-de-encontro">
+        <summary>
+          10. Gerador de encontro aleatório
+          <span class="etiqueta-nivel etiqueta-nivel--avancado">AVANÇADO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          tudo junto · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_13_gerador_de_encontro.py</span>
+        </p>
+        <p>
+          Combine um dicionário de monstros (nome para pontos de vida), um
+          de cenários e um de recompensas. Sorteie um de cada com
+          <code>random.choice(list(dicionario))</code> e narre o encontro
+          em frases completas. Use pelo menos um dicionário aninhado e pelo
+          menos um <code>if</code> — e lembre que as mensagens precisam
+          funcionar ouvidas em voz alta.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>random.choice()</code> precisa de uma lista, então
+            converta as chaves com <code>list()</code> antes de sortear:
+            <code>random.choice(list(monstros))</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-gerador-de-encontro">Seu código:</label>
+          <textarea id="codigo-gerador-de-encontro" class="editor-python__codigo" rows="16">import random
+
+monstros = {
+    "goblin": {"vida": 20, "ataque": 3},
+    "orc": {"vida": 45, "ataque": 7},
+    "dragão filhote": {"vida": 90, "ataque": 12},
+}
+cenarios = ["uma caverna úmida", "uma floresta densa", "as ruínas de um templo"]
+recompensas = ["uma moeda antiga", "um pergaminho rasgado", "uma poção empoeirada"]
+
+monstro = random.choice(list(monstros))
+# Sorteie também um cenário e uma recompensa.
+
+# Narre o encontro em frases completas, usando pelo menos um if
+# (por exemplo, avisar quando o monstro tiver muita vida).</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <p class="bloco-feedback" data-assunto="Aula 05 - Exercicios de Pratica">
+        Alguma dúvida ou quer comentar sobre algum destes exercícios de
+        prática?
+        <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+        (no assunto que abrir, acrescente seu nome e diga qual exercício) —
+        ou copie o endereço diretamente:
+        <strong class="bloco-feedback__endereco"></strong>
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">
+        Desafio da semana — Catálogo de jogos favoritos
+      </h2>
+
+      <h3>O que você vai construir</h3>
+      <p>
+        Um catálogo dos seus jogos favoritos usando dicionário de
+        dicionários — cada jogo com gênero, nota e plataforma. O programa
+        permite cadastrar um jogo novo durante a execução e mostra o
+        catálogo completo no final.
+      </p>
+
+      <h3>Por que isso é interessante</h3>
+      <p>
+        É literalmente como catálogos e bancos de dados reais organizam
+        informação — e é a mesma estrutura que vocês vão usar para guardar
+        as configurações do Invasão Alienígena na segunda metade do curso.
+      </p>
+
+      <h3>Requisitos mínimos</h3>
+      <ol>
+        <li>
+          Começar com pelo menos 3 jogos cadastrados, cada um com gênero,
+          nota e plataforma.
+        </li>
+        <li>
+          Pedir ao usuário os dados de um jogo novo com
+          <code>input()</code> e acrescentar ao catálogo.
+        </li>
+        <li>
+          Percorrer o catálogo com <code>for</code> e
+          <code>.items()</code>.
+        </li>
+        <li>
+          Imprimir cada jogo com suas informações uma por linha, no formato
+          "Chave: valor".
+        </li>
+        <li>Informar no final quantos jogos existem no catálogo.</li>
+      </ol>
+
+      <h3>Exemplo de execução</h3>
+      <p>Um exemplo de como a conversa com o programa pode ficar:</p>
+      <pre><code>Vamos cadastrar um jogo novo no catálogo.
+Nome do jogo: Stardew Valley
+Gênero: simulação
+Nota (de 0 a 10): 9.4
+Plataforma: Switch
+
+Catálogo completo:
+
+Hollow Knight
+Gênero: metroidvania
+Nota: 9.5
+Plataforma: PC
+
+Celeste
+Gênero: plataforma
+Nota: 9.0
+Plataforma: Switch
+
+Hades
+Gênero: roguelike
+Nota: 9.3
+Plataforma: PC
+
+Stardew Valley
+Gênero: simulação
+Nota: 9.4
+Plataforma: Switch
+
+Total de jogos no catálogo: 4</code></pre>
+
+      <h3>Vá além (opcional)</h3>
+      <ul>
+        <li>Perguntar um gênero e listar só os jogos dele.</li>
+        <li>Descobrir o jogo de maior nota.</li>
+        <li>
+          Sortear um jogo como sugestão do dia com
+          <code>random.choice()</code>.
+        </li>
+        <li>
+          Acrescentar uma chave <code>"zerado"</code> com
+          <code>True</code>/<code>False</code> e contar quantos você
+          terminou.
+        </li>
+        <li>Guardar uma lista de tags dentro de cada jogo.</li>
+      </ul>
+
+      <h3>Como entregar</h3>
+      <p>
+        Arquivo
+        <span class="arquivo-sugerido">desafio_05_catalogo_de_jogos.py</span>,
+        publicado no repositório do curso pela interface web do GitHub
+        (Add file → Upload files).
+      </p>
+
+      <h3>Checklist de conclusão</h3>
+      <ul>
+        <li>Roda sem erro do começo ao fim.</li>
+        <li>Usa dicionário de dicionários.</li>
+        <li>
+          O jogo cadastrado pelo usuário aparece de fato no catálogo
+          impresso.
+        </li>
+        <li>
+          A saída é compreensível lida em voz alta, uma informação por
+          linha.
+        </li>
+        <li>Está publicado no GitHub.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pesquisa">
+      <h2 id="titulo-pesquisa">Pesquisa da semana</h2>
+      <p>
+        Descubra o que é JSON e por que ele se parece tanto com um
+        dicionário Python. Venha na próxima aula sabendo dizer, em uma
+        frase, para que serve.
+      </p>
+      <p>
+        Ponto de partida:
+        <a href="https://www.json.org/json-pt.html">
+          JSON — introdução oficial em português
+        </a>
+      </p>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Ao imprimir uma ficha, use o formato "Nome: valor", uma informação
+        por linha. Evite tabelas alinhadas com espaços — o leitor de tela
+        lê linha a linha, e colunas viram confusão.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/datastructures.html#dictionaries">
+            Tutorial de Python — Dicionários
+          </a>
+        </li>
+        <li>
+          <a href="https://www.json.org/json-pt.html">
+            JSON — introdução oficial em português
+          </a>
+        </li>
+        <li>
+          <a href="http://programarcadegames.com/index.php?lang=pt-br">
+            Program Arcade Games — curso gratuito de Python com jogos
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a class="contato-do-professor" href="#"></a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>

@@ -385,6 +385,62 @@ main {
 }
 
 /* -----------------------------------------------------------------
+   Etiqueta de nivel do exercicio (sempre texto, nunca so cor)
+----------------------------------------------------------------- */
+
+.etiqueta-nivel {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  border: 1px solid currentColor;
+}
+
+.etiqueta-nivel--essencial {
+  color: var(--cor-destaque);
+}
+
+.etiqueta-nivel--facil {
+  color: var(--cor-status-em-breve);
+}
+
+.etiqueta-nivel--medio {
+  color: #9ec5ff;
+}
+
+.etiqueta-nivel--avancado {
+  color: #ff9e9e;
+}
+
+.metadados-do-exercicio {
+  margin: 0 0 0.75rem;
+  color: var(--cor-texto-esmaecido);
+  max-width: none;
+}
+
+.arquivo-sugerido {
+  font-family: var(--fonte-monoespacada);
+}
+
+/* -----------------------------------------------------------------
+   Bloco "Ficou travado?"
+----------------------------------------------------------------- */
+
+.bloco-ficou-travado {
+  border: 1px solid var(--cor-destaque);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background-color: var(--cor-fundo-elevado);
+}
+
+.bloco-ficou-travado li {
+  margin-bottom: 0.5rem;
+}
+
+/* -----------------------------------------------------------------
    Sumario de links dos exercicios de pratica
 ----------------------------------------------------------------- */
 

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 4 — Condicionais (if / elif / else) | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 4 — Condicionais (if / elif / else)</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Usar <code>if</code>, <code>elif</code> e <code>else</code>.</li>
+        <li>
+          Usar os operadores de comparação: <code>==</code>, <code>!=</code>,
+          <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>,
+          <code>&lt;=</code>.
+        </li>
+        <li>
+          Usar os operadores lógicos <code>and</code>, <code>or</code> e
+          <code>not</code>.
+        </li>
+        <li>Testar se um item está numa lista com <code>in</code>.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula — "No fundo, tudo é 0 ou 1"</h2>
+      <p>
+        Dentro do computador não existe "mais ou menos": só bilhões de
+        chavinhas ligadas ou desligadas. Em 1854, George Boole escreveu as
+        regras para combinar verdadeiro e falso — muito antes de existir
+        computador. É dessas regras que saem o <code>and</code>, o
+        <code>or</code> e o <code>not</code> que vamos usar hoje.
+      </p>
+      <p>
+        Curiosidade: a palavra "bit" vem de <em>binary digit</em>, ou seja,
+        dígito binário — uma única chavinha, que só pode estar em 0 ou em 1.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>
+          O tipo <code>bool</code>: só existem <code>True</code> e
+          <code>False</code>, sempre com a primeira letra maiúscula.
+        </li>
+        <li>
+          A diferença entre <code>=</code> (guarda um valor) e
+          <code>==</code> (faz uma pergunta).
+        </li>
+        <li>
+          A anatomia do <code>if</code>: palavra-chave, condição, dois
+          pontos, e o bloco indentado com 4 espaços.
+        </li>
+        <li><code>if</code> / <code>else</code>.</li>
+        <li>
+          <code>if</code> / <code>elif</code> / <code>else</code> — e por que
+          a ordem das condições importa.
+        </li>
+        <li>
+          Os operadores lógicos <code>and</code>, <code>or</code> e
+          <code>not</code>.
+        </li>
+        <li>O operador <code>in</code>.</li>
+        <li><code>if</code> dentro de <code>for</code>.</li>
+        <li>
+          Normalizar a entrada do usuário com
+          <code>.strip().lower()</code>.
+        </li>
+      </ul>
+    </section>
+
+    <section
+      class="bloco-ficou-travado"
+      aria-labelledby="titulo-ficou-travado"
+    >
+      <h2 id="titulo-ficou-travado">Ficou travado?</h2>
+      <p>Seis erros que pegam quase todo mundo nesta aula:</p>
+      <ol>
+        <li>
+          <strong>Esqueci os dois pontos.</strong> O Python avisa com
+          <code>SyntaxError</code>. Todo <code>if</code>, <code>elif</code> e
+          <code>else</code> termina com <code>:</code>.
+        </li>
+        <li>
+          <strong>Usei <code>=</code> no lugar de <code>==</code>.</strong>
+          Também dá <code>SyntaxError</code>. Um sinal guarda um valor, dois
+          sinais fazem uma pergunta.
+        </li>
+        <li>
+          <strong>Recuo errado.</strong> Dá <code>IndentationError</code>. O
+          bloco de dentro do <code>if</code> usa 4 espaços a mais que a
+          linha do <code>if</code>.
+        </li>
+        <li>
+          <strong>Comparei texto com número.</strong>
+          <code>"3" == 3</code> é <code>False</code>, porque um é texto e o
+          outro é número. Converta antes com <code>int()</code>.
+        </li>
+        <li>
+          <strong>Escrevi <code>true</code> minúsculo.</strong> Dá
+          <code>NameError</code>. Em Python é <code>True</code> e
+          <code>False</code>, sempre com maiúscula.
+        </li>
+        <li>
+          <strong>Nenhum erro, mas o resultado está errado.</strong> Aí é
+          bug de lógica, não de sintaxe. Revise a ordem dos
+          <code>elif</code>: o primeiro que der certo é o único que roda.
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-essenciais">
+      <h2 id="titulo-exercicios-essenciais">Exercícios essenciais</h2>
+      <p>
+        Três exercícios que cobrem o coração da aula. Quem fizer só estes
+        já revisou o essencial.
+      </p>
+
+      <section aria-labelledby="titulo-exercicio-alerta-de-vida">
+        <h3 id="titulo-exercicio-alerta-de-vida">
+          Exercício 1 — Alerta de vida baixa
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>if</code> simples · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_01_alerta_de_vida.py</span>
+        </p>
+        <p>
+          Inspirado nos corações de The Legend of Zelda. Crie a variável
+          <code>vidas_restantes</code> com o valor 2. Se ela for menor que
+          3, imprima um alerta. Depois do <code>if</code>, imprima sempre
+          quantas vidas restam.
+        </p>
+        <p>
+          Rode duas vezes: uma com 2 vidas e outra com 5. Na segunda, o
+          alerta não pode aparecer.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Cuidado! Vida baixa.
+Você tem 2 vidas restantes.</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Aqui não precisa de <code>else</code>. Um <code>if</code>
+            sozinho resolve: quando a condição é falsa, o Python
+            simplesmente pula o bloco e segue para a linha de baixo.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-alerta-de-vida">Seu código:</label>
+          <textarea id="codigo-alerta-de-vida" class="editor-python__codigo" rows="7">vidas_restantes = 2
+
+# Se vidas_restantes for menor que 3, imprima um alerta de vida baixa.
+
+
+print("Você tem " + str(vidas_restantes) + " vidas restantes.")</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 04 - Exercicio Alerta de Vida Baixa">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-rank">
+        <h3 id="titulo-exercicio-rank">
+          Exercício 2 — Rank de fim de fase
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>if</code> / <code>elif</code> / <code>else</code> ·
+          arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_02_rank_de_fim_de_fase.py</span>
+        </p>
+        <p>
+          Inspirado nas notas de fim de fase de Devil May Cry e Sonic. Com a
+          variável <code>pontos</code> valendo 780, classifique a
+          pontuação em quatro faixas: 900 ou mais é Rank S; 700 ou mais é
+          Rank A; 500 ou mais é Rank B; abaixo disso é Rank C. Imprima o
+          rank junto com a pontuação.
+        </p>
+        <p>Teste com 950, 780, 600 e 120.</p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>780 pontos. Rank A - muito bom!</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Escreva as faixas do mais exigente para o menos exigente. Se
+            inverter a ordem, todo mundo cai na primeira faixa e ninguém
+            nunca vê o Rank S.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-rank">Seu código:</label>
+          <textarea id="codigo-rank" class="editor-python__codigo" rows="8">pontos = 780
+
+if pontos >= 900:
+    print(str(pontos) + " pontos. Rank S - perfeito!")
+# Escreva aqui os outros casos:
+# 700 ou mais é Rank A, 500 ou mais é Rank B, e abaixo disso é Rank C.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 04 - Exercicio Rank de Fim de Fase">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-golpe-especial">
+        <h3 id="titulo-exercicio-golpe-especial">
+          Exercício 3 — Golpe especial liberado
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>and</code>, <code>or</code>, <code>not</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_03_golpe_especial.py</span>
+        </p>
+        <p>
+          Inspirado nos supers de Street Fighter. Use duas variáveis
+          booleanas, <code>barra_cheia</code> e <code>combo_correto</code>.
+          Com <code>and</code>, libere o golpe só quando as duas forem
+          verdadeiras, e use <code>else</code> para explicar que ainda não
+          dá. Depois, acrescente um segundo <code>if</code> com
+          <code>not</code> para avisar quando a barra não estiver cheia.
+        </p>
+        <p>
+          Teste as quatro combinações possíveis de
+          <code>True</code> e <code>False</code>.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>GOLPE ESPECIAL LIBERADO!</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Só uma das quatro combinações libera o golpe. Se duas
+            liberarem, você usou <code>or</code> sem querer.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-golpe-especial">Seu código:</label>
+          <textarea id="codigo-golpe-especial" class="editor-python__codigo" rows="11">barra_cheia = True
+combo_correto = True
+
+if barra_cheia and combo_correto:
+    print("GOLPE ESPECIAL LIBERADO!")
+else:
+    # Explique aqui que o golpe ainda não está disponível.
+    print("...")
+
+# Escreva aqui um segundo if, com not, avisando quando a barra não estiver cheia.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 04 - Exercicio Golpe Especial Liberado">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-pratica">
+      <h2 id="titulo-exercicios-pratica">Exercícios de prática</h2>
+      <p>
+        Dez exercícios curtos, em ordem crescente de dificuldade, para
+        praticar mais o conteúdo desta aula. Cada um abre em uma caixa
+        recolhida — clique ou dê Enter no título para abrir.
+      </p>
+
+      <nav class="sumario-de-exercicios" aria-label="Sumário dos exercícios de prática">
+        <p>Ir direto para:</p>
+        <ol>
+          <li><a href="#exercicio-porta-do-calabouco">A porta do calabouço (fácil)</a></li>
+          <li><a href="#exercicio-atravessar-a-caverna">Atravessar a caverna (fácil)</a></li>
+          <li><a href="#exercicio-classificacao-indicativa">Classificação indicativa da loja (fácil)</a></li>
+          <li><a href="#exercicio-isso-esta-no-inventario">Isso está no inventário? (fácil)</a></li>
+          <li><a href="#exercicio-tabela-de-tipos">Tabela de tipos (fácil)</a></li>
+          <li><a href="#exercicio-contador-de-moedas">Contador de moedas (médio)</a></li>
+          <li><a href="#exercicio-inimigos-de-pe">Quantos inimigos ainda estão de pé (médio)</a></li>
+          <li><a href="#exercicio-vitrine-da-loja">A vitrine da loja (médio)</a></li>
+          <li><a href="#exercicio-barra-de-vida">Barra de vida em texto (e em voz) (médio)</a></li>
+          <li><a href="#exercicio-modo-acessivel">Modo acessível: liga e desliga (médio)</a></li>
+        </ol>
+      </nav>
+
+      <details class="exercicio-de-pratica" id="exercicio-porta-do-calabouco">
+        <summary>
+          1. A porta do calabouço
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>if</code> / <code>else</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_04_porta_do_calabouco.py</span>
+        </p>
+        <p>
+          Com a variável <code>tem_chave</code> valendo <code>True</code> ou
+          <code>False</code>: se tiver a chave, a porta se abre; senão,
+          avise que está trancada e diga o que a pessoa precisa procurar.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Escreva <code>if tem_chave:</code> sem o <code>== True</code> —
+            a variável já é booleana, então ela já é a própria pergunta.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-porta-do-calabouco">Seu código:</label>
+          <textarea id="codigo-porta-do-calabouco" class="editor-python__codigo" rows="7">tem_chave = True
+
+if tem_chave:
+    print("A porta range e se abre. Você entra no calabouço.")
+# Escreva aqui o else, avisando que a porta está trancada
+# e dizendo o que a pessoa precisa procurar.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-atravessar-a-caverna">
+        <summary>
+          2. Atravessar a caverna
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>or</code> e <code>not</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_05_atravessar_a_caverna.py</span>
+        </p>
+        <p>
+          Inspirado em Hollow Knight. Com as variáveis
+          <code>tem_mapa</code> e <code>tem_lanterna</code>, use
+          <code>or</code>: basta um dos dois para atravessar. Depois,
+          acrescente um segundo <code>if</code> com <code>not</code>, que dê
+          um aviso extra quando faltar lanterna — mesmo que a pessoa
+          consiga passar pelo mapa.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Dois <code>if</code> separados podem rodar os dois na mesma
+            execução. Isso é normal aqui: um decide se dá para passar, o
+            outro só comenta sobre a lanterna.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-atravessar-a-caverna">Seu código:</label>
+          <textarea id="codigo-atravessar-a-caverna" class="editor-python__codigo" rows="10">tem_mapa = True
+tem_lanterna = False
+
+if tem_mapa or tem_lanterna:
+    print("Você atravessa a caverna e chega do outro lado.")
+else:
+    print("Está escuro demais. Você volta para a entrada.")
+
+# Escreva aqui um segundo if, com not, avisando que falta lanterna.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-classificacao-indicativa">
+        <summary>
+          3. Classificação indicativa da loja
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>input</code> + <code>int()</code> + <code>elif</code> ·
+          arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_06_classificacao_indicativa.py</span>
+        </p>
+        <p>
+          Pergunte o nome e a idade da pessoa, converta a idade com
+          <code>int()</code> e use <code>if</code> / <code>elif</code> /
+          <code>else</code> para dizer o que ela pode jogar: 18 ou mais
+          libera tudo; 16 ou mais, até 16; 12 ou mais, até 12; abaixo
+          disso, só os jogos livres. Chame a pessoa pelo nome na resposta.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Sem o <code>int()</code>, a idade seria o texto
+            <code>"16"</code>, e comparar texto com número dá erro.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-classificacao-indicativa">Seu código:</label>
+          <textarea id="codigo-classificacao-indicativa" class="editor-python__codigo" rows="8">nome = input("Qual é o seu nome? ")
+idade = int(input("Quantos anos você tem? "))
+
+if idade >= 18:
+    print(nome + ", você pode jogar qualquer jogo da loja.")
+# Escreva aqui os outros casos: 16 ou mais, 12 ou mais, e o else para os demais.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-isso-esta-no-inventario">
+        <summary>
+          4. Isso está no inventário?
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          listas + <code>in</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_07_isso_esta_no_inventario.py</span>
+        </p>
+        <p>
+          Com uma lista <code>inventario</code> de pelo menos quatro itens,
+          pergunte qual item a pessoa procura e responda usando
+          <code>in</code>. Se ela não tiver o item, imprima a lista
+          completa do que ela tem.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use <code>.strip().lower()</code> na resposta, senão
+            <code>"Espada"</code> não bate com <code>"espada"</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-isso-esta-no-inventario">Seu código:</label>
+          <textarea id="codigo-isso-esta-no-inventario" class="editor-python__codigo" rows="8">inventario = ["espada", "escudo", "corda", "lanterna"]
+
+procurado = input("Qual item você está procurando? ")
+procurado = procurado.strip().lower()
+
+# Use if procurado in inventario: para responder se a pessoa tem o item.
+# No else, imprima a lista completa do que ela tem.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-tabela-de-tipos">
+        <summary>
+          5. Tabela de tipos
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          comparação de texto + <code>elif</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_08_tabela_de_tipos.py</span>
+        </p>
+        <p>
+          Inspirado na vantagem de tipos de Pokémon. Com
+          <code>tipo_do_ataque</code> valendo <code>"agua"</code> e
+          <code>tipo_do_inimigo</code> valendo <code>"fogo"</code>, cubra os
+          casos: água contra fogo é super efetivo; fogo contra água é pouco
+          efetivo; tipos iguais não têm vantagem; qualquer outra combinação
+          causa dano normal.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Para o caso dos tipos iguais, compare as duas variáveis entre
+            si: <code>tipo_do_ataque == tipo_do_inimigo</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-tabela-de-tipos">Seu código:</label>
+          <textarea id="codigo-tabela-de-tipos" class="editor-python__codigo" rows="10">tipo_do_ataque = "agua"
+tipo_do_inimigo = "fogo"
+
+if tipo_do_ataque == "agua" and tipo_do_inimigo == "fogo":
+    print("É super efetivo!")
+# Escreva aqui os outros casos:
+# fogo contra água é pouco efetivo;
+# tipos iguais não têm vantagem;
+# qualquer outra combinação causa dano normal.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-contador-de-moedas">
+        <summary>
+          6. Contador de moedas
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>for</code> + soma + <code>if</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_09_contador_de_moedas.py</span>
+        </p>
+        <p>
+          As 100 moedas que dão vida extra em Super Mario. Com a lista
+          <code>moedas_por_fase</code>, some tudo usando <code>for</code>.
+          Depois do laço, use <code>if</code> / <code>elif</code> /
+          <code>else</code>: 100 ou mais ganha vida extra; 50 ou mais
+          recebe um incentivo; abaixo de 50, "continue tentando".
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A variável do total precisa existir antes do <code>for</code>,
+            começando em zero — senão o Python não tem onde somar.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-contador-de-moedas">Seu código:</label>
+          <textarea id="codigo-contador-de-moedas" class="editor-python__codigo" rows="11">moedas_por_fase = [23, 41, 8, 35]
+
+total_de_moedas = 0
+for moedas in moedas_por_fase:
+    total_de_moedas = total_de_moedas + moedas
+
+print("Total de moedas: " + str(total_de_moedas))
+
+# Use if / elif / else para dizer o resultado:
+# 100 ou mais ganha vida extra; 50 ou mais recebe incentivo; abaixo de 50, continue tentando.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-inimigos-de-pe">
+        <summary>
+          7. Quantos inimigos ainda estão de pé
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>if</code> dentro de <code>for</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_10_inimigos_de_pe.py</span>
+        </p>
+        <p>
+          Percorra a lista <code>vidas_dos_inimigos</code> e conte quantos
+          têm vida maior que zero. Depois do laço, imprima quantos restam —
+          ou "Fase limpa!" se não restar nenhum.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            O <code>if</code> que conta fica dentro do <code>for</code> (8
+            espaços de recuo); o <code>if</code> da mensagem final fica
+            fora do laço (nenhum espaço de recuo).
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-inimigos-de-pe">Seu código:</label>
+          <textarea id="codigo-inimigos-de-pe" class="editor-python__codigo" rows="10">vidas_dos_inimigos = [0, 34, 0, 12, 90, 0]
+
+inimigos_de_pe = 0
+for vida in vidas_dos_inimigos:
+    # Conte aqui: se a vida for maior que zero, some 1 em inimigos_de_pe.
+    print("Verificando inimigo com " + str(vida) + " de vida.")
+
+# Depois do laço, imprima quantos restam - ou "Fase limpa!" se não restar nenhum.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-vitrine-da-loja">
+        <summary>
+          8. A vitrine da loja
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          listas paralelas + <code>for</code> + <code>if</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_11_vitrine_da_loja.py</span>
+        </p>
+        <p>
+          Inspirado no mercador de Resident Evil 4. Com as listas
+          <code>itens_da_loja</code> e <code>precos</code>, do mesmo
+          tamanho, pergunte quantas moedas o jogador tem, percorra por
+          índice e diga, item a item, se dá para comprar. No fim, conte
+          quantos cabem no orçamento.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use <code>precos[indice]</code> para pegar o preço do item que
+            está na mesma posição da outra lista.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-vitrine-da-loja">Seu código:</label>
+          <textarea id="codigo-vitrine-da-loja" class="editor-python__codigo" rows="14">itens_da_loja = ["erva", "granada", "espingarda", "colete"]
+precos = [30, 120, 800, 450]
+
+moedas = int(input("Quantas moedas você tem? "))
+
+cabem_no_orcamento = 0
+for indice in range(len(itens_da_loja)):
+    item = itens_da_loja[indice]
+    preco = precos[indice]
+    # Use if para dizer se dá para comprar este item
+    # e some 1 em cabem_no_orcamento quando couber.
+    print(item + " custa " + str(preco) + " moedas.")
+
+# Imprima no final quantos itens cabem no orçamento.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-barra-de-vida">
+        <summary>
+          9. Barra de vida em texto (e em voz)
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>for</code> + <code>range</code> + <code>if</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_12_barra_de_vida.py</span>
+        </p>
+        <p>
+          Com <code>vidas</code> (de 0 a 5) e <code>vidas_maximas</code>
+          valendo 5, monte uma barra com <code>[#]</code> para vida cheia e
+          <code>[ ]</code> para vida perdida. Imprima a barra e, na linha
+          seguinte, a mesma informação por extenso ("Vida: 3 de 5") — essa
+          segunda linha é a que funciona ouvida em voz alta. Use
+          <code>if</code> para avisar "MODO CRÍTICO" com 1 vida e "Game
+          Over" com 0.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Comece com uma string vazia (<code>barra = ""</code>) e vá
+            somando pedaços dentro do <code>for</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-barra-de-vida">Seu código:</label>
+          <textarea id="codigo-barra-de-vida" class="editor-python__codigo" rows="13">vidas = 3
+vidas_maximas = 5
+
+barra = ""
+for posicao in range(vidas_maximas):
+    # Se posicao for menor que vidas, some "[#]" na barra; senão, some "[ ]".
+    barra = barra + "[?]"
+
+print(barra)
+print("Vida: " + str(vidas) + " de " + str(vidas_maximas))
+
+# Use if para avisar "MODO CRÍTICO" com 1 vida e "Game Over" com 0.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-modo-acessivel">
+        <summary>
+          10. Modo acessível: liga e desliga
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          booleano + <code>if</code> / <code>else</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_13_modo_acessivel.py</span>
+        </p>
+        <p>
+          O tema do curso em versão de bolso. Com
+          <code>modo_acessivel</code> começando em <code>True</code>, mais
+          <code>pontos_ganhos</code> e <code>total_de_pontos</code>: ligado,
+          imprima uma frase completa e clara, feita para ser ouvida;
+          desligado, a versão curta e visual, tipo <code>"+40 (760)"</code>.
+        </p>
+        <p>
+          Rode nos dois modos e compare: as duas versões dão a mesma
+          informação?
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Alienígena destruído. Você ganhou 40 pontos. Total: 760 pontos.</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Regra de ouro: no modo acessível, a frase precisa fazer sentido
+            sozinha, sem depender de nada desenhado na tela.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-modo-acessivel">Seu código:</label>
+          <textarea id="codigo-modo-acessivel" class="editor-python__codigo" rows="12">modo_acessivel = True
+pontos_ganhos = 40
+total_de_pontos = 760
+
+if modo_acessivel:
+    print("Alienígena destruído. Você ganhou " + str(pontos_ganhos) + " pontos. Total: " + str(total_de_pontos) + " pontos.")
+else:
+    # Escreva aqui a versão curta e visual, tipo "+40 (760)".
+    print("...")
+
+# Troque modo_acessivel para False e rode de novo: as duas versões dizem a mesma coisa?</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <p class="bloco-feedback" data-assunto="Aula 04 - Exercicios de Pratica">
+        Alguma dúvida ou quer comentar sobre algum destes exercícios de
+        prática?
+        <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+        (no assunto que abrir, acrescente seu nome e diga qual exercício) —
+        ou copie o endereço diretamente:
+        <strong class="bloco-feedback__endereco"></strong>
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">Desafio da semana — Guia de Build</h2>
+
+      <h3>O que você vai construir</h3>
+      <p>
+        Um programa que faz três perguntas sobre o estilo de jogo da pessoa
+        — prefere ataque ou defesa? luta de perto ou de longe? gosta de
+        magia? — e recomenda uma classe a partir das respostas: guerreiro,
+        mago, arqueiro, ladino, ou a que você inventar.
+      </p>
+
+      <h3>Por que isso é interessante</h3>
+      <p>
+        É uma versão simplificada de um "sistema especialista": a mesma
+        ideia por trás de assistentes que recomendam coisas a partir de
+        várias condições combinadas.
+      </p>
+
+      <h3>Requisitos mínimos</h3>
+      <ol>
+        <li>Fazer pelo menos três perguntas com <code>input()</code>.</li>
+        <li>
+          Usar <code>if</code> / <code>elif</code> / <code>else</code>.
+        </li>
+        <li>Usar pelo menos um <code>and</code> ou <code>or</code>.</li>
+        <li>
+          Toda pergunta precisa de um <code>else</code> para a resposta que
+          você não previu.
+        </li>
+        <li>
+          A recomendação final vem em frase completa, que faça sentido
+          ouvida em voz alta.
+        </li>
+      </ol>
+
+      <h3>Exemplo de execução</h3>
+      <p>Um exemplo de como a conversa com o programa pode ficar:</p>
+      <pre><code>Você prefere atacar ou se defender? (ataque/defesa): ataque
+Você luta melhor de perto ou de longe? (perto/longe): longe
+Você gosta de magia? (sim/nao): sim
+
+Analisando seu estilo de jogo...
+
+Pelo seu perfil, a classe ideal para você é: mago.
+Você prefere atacar de longe e gosta de magia, então lançar
+feitiços à distância combina mais com o seu jeito de jogar.</code></pre>
+
+      <h3>Vá além (opcional)</h3>
+      <ul>
+        <li>
+          Sortear entre duas ou três classes válidas com
+          <code>random.choice()</code>.
+        </li>
+        <li>
+          Acrescentar uma quarta pergunta que funcione como desempate.
+        </li>
+        <li>
+          Guardar as respostas numa lista e imprimir um resumo do perfil no
+          final.
+        </li>
+        <li>
+          Criar uma classe secreta que só aparece numa combinação rara.
+        </li>
+        <li>
+          Permitir informar o nome do personagem e incluí-lo na
+          recomendação.
+        </li>
+      </ul>
+
+      <h3>Como entregar</h3>
+      <p>
+        Arquivo
+        <span class="arquivo-sugerido">desafio_04_guia_de_build.py</span>,
+        publicado no repositório do curso pela interface web do GitHub
+        (Add file → Upload files).
+      </p>
+
+      <h3>Checklist de conclusão</h3>
+      <ul>
+        <li>Roda do começo ao fim sem erro.</li>
+        <li>Tem pelo menos três caminhos diferentes de resposta.</li>
+        <li>Nenhuma resposta do usuário quebra o programa.</li>
+        <li>
+          A recomendação final é uma frase completa e compreensível lida em
+          voz alta.
+        </li>
+        <li>Está publicado no GitHub.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pesquisa">
+      <h2 id="titulo-pesquisa">Pesquisa da semana</h2>
+      <p>
+        Descubra o que é <code>match</code> / <code>case</code>, a forma
+        mais nova do Python de organizar muitas condições. Não precisa usar
+        no desafio — é só vir na próxima aula sabendo dizer, em uma frase,
+        para que serve.
+      </p>
+      <p>
+        Ponto de partida:
+        <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#match-statements">
+          Tutorial de Python — Instruções match
+        </a>
+      </p>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Todo texto que o seu programa imprime pode ser lido por um leitor
+        de tela. Prefira frases completas a códigos enigmáticos: "Você
+        perdeu uma vida. Restam 2." funciona muito melhor no áudio do que
+        "-1 HP".
+      </p>
+      <p>
+        Sobre a indentação: no Thonny, o leitor de tela anuncia a coluna do
+        cursor. Dá para conferir o recuo sem enxergar a tela — o bloco de
+        dentro de um <code>if</code> começa na coluna 5.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#if-statements">
+            Tutorial de Python — Instruções if
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/library/stdtypes.html#boolean-operations-and-or-not">
+            Documentação do Python — Operações booleanas (and, or, not)
+          </a>
+        </li>
+        <li>
+          <a href="http://programarcadegames.com/index.php?lang=pt-br">
+            Program Arcade Games — curso gratuito de Python com jogos
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a class="contato-do-professor" href="#"></a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>
