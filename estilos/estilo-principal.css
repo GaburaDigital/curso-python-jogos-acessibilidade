@@ -441,6 +441,29 @@ main {
 }
 
 /* -----------------------------------------------------------------
+   Aviso importante (ex.: laco infinito trava a aba)
+   O destaque visual e so reforco: o texto do aviso ja diz tudo.
+----------------------------------------------------------------- */
+
+.aviso-importante {
+  border: 2px solid var(--cor-destaque);
+  border-left-width: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 2rem;
+  background-color: var(--cor-fundo-elevado);
+}
+
+.aviso-importante h2 {
+  margin-top: 0;
+  color: var(--cor-destaque);
+}
+
+.aviso-importante li {
+  margin-bottom: 0.5rem;
+}
+
+/* -----------------------------------------------------------------
    Sumario de links dos exercicios de pratica
 ----------------------------------------------------------------- */
 
