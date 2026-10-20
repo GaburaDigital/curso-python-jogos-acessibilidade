@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 6 — Laços while e entrada do usuário | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 6 — Laços while e entrada do usuário</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Usar o laço <code>while</code>.</li>
+        <li>Validar entradas simples do usuário.</li>
+        <li>Usar <code>break</code> e <code>continue</code>.</li>
+        <li>Evitar laços infinitos.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula — cliente e servidor</h2>
+      <p>
+        Pense no garçom de um restaurante. Você (o cliente) faz um pedido,
+        o garçom leva até a cozinha (o servidor), a cozinha prepara e o
+        garçom traz de volta. Você nunca entra na cozinha e não precisa
+        saber como ela funciona: só faz o pedido e recebe a resposta.
+      </p>
+      <p>
+        É exatamente assim que o seu navegador conversa com os sites o dia
+        inteiro. Ele pede uma página, o servidor monta a resposta e manda de
+        volta. E repare: isso é um laço — pedir, esperar, receber, pedir de
+        novo. Um programa interativo faz a mesma coisa com você.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>
+          A diferença entre <code>for</code> (repete um número conhecido de
+          vezes) e <code>while</code> (repete enquanto uma condição for
+          verdadeira).
+        </li>
+        <li>A anatomia do <code>while</code>.</li>
+        <li>
+          Usar uma variável de controle (<em>flag</em>) para decidir quando
+          parar.
+        </li>
+        <li><code>break</code> para sair do laço na hora.</li>
+        <li>
+          <code>continue</code> para pular para a próxima repetição.
+        </li>
+        <li>Validar o que o usuário digitou antes de seguir.</li>
+        <li>
+          Usar <code>while</code> junto com listas e dicionários para
+          coletar várias entradas.
+        </li>
+      </ul>
+    </section>
+
+    <section
+      class="bloco-ficou-travado"
+      aria-labelledby="titulo-ficou-travado"
+    >
+      <h2 id="titulo-ficou-travado">Ficou travado?</h2>
+      <p>Seis erros que pegam quase todo mundo nesta aula:</p>
+      <ol>
+        <li>
+          <strong>O programa nunca para.</strong> A condição do
+          <code>while</code> nunca vira falsa. Confira se alguma linha
+          dentro do laço muda a variável que está sendo testada.
+        </li>
+        <li>
+          <strong>Esqueci de incrementar o contador.</strong> É o mesmo
+          sintoma do item 1. Se o laço usa <code>tentativas</code>, precisa
+          existir um <code>tentativas = tentativas + 1</code> dentro dele.
+        </li>
+        <li>
+          <strong>O laço roda uma vez só.</strong> O <code>break</code> está
+          no lugar errado, ou a condição já começa falsa.
+        </li>
+        <li>
+          <strong>Comparei texto com número.</strong> O
+          <code>input()</code> devolve texto; converta com
+          <code>int()</code> antes de comparar.
+        </li>
+        <li>
+          <strong><code>IndentationError</code>.</strong> O bloco de dentro
+          do <code>while</code> precisa de 4 espaços, igual ao
+          <code>if</code> da Aula 4.
+        </li>
+        <li>
+          <strong>A resposta "Sim" não funciona, mas "sim" funciona.</strong>
+          Normalize com <code>.strip().lower()</code> antes de comparar.
+        </li>
+      </ol>
+    </section>
+
+    <section class="aviso-importante" aria-labelledby="titulo-aviso-laco">
+      <h2 id="titulo-aviso-laco">
+        Atenção: um laço sem fim trava esta página
+      </h2>
+      <p>
+        Esta é a aula em que isso pode acontecer, então vale ler antes de
+        começar os exercícios.
+      </p>
+      <p>
+        Se você clicar em "Executar" e a página parar de responder — nada
+        acontece, o botão não reage, o leitor de tela fica em silêncio —
+        provavelmente o seu laço não tem condição de parada, e ele está
+        rodando para sempre. No Thonny você interromperia com
+        <strong>Ctrl+C</strong>. Aqui no site isso não existe: o Python roda
+        dentro da própria aba do navegador, então quando ele entra em um
+        laço sem fim, a aba inteira congela junto.
+      </p>
+      <p>
+        <strong>O que fazer:</strong> feche a aba e abra a página de novo. É
+        a única saída. O código que você tinha escrito no editor se perde,
+        porque nada fica salvo.
+      </p>
+      <p>
+        <strong>A recomendação desta aula:</strong> escreva os exercícios de
+        <code>while</code> direto no Thonny, no seu computador. Lá você
+        interrompe um laço sem fim com Ctrl+C e não perde nada. Os editores
+        aqui do site continuam funcionando e servem bem para testar trechos
+        curtos — só saiba que, nesta aula, um erro pode custar a aba.
+      </p>
+      <p>
+        Por isso, todos os códigos iniciais desta página já vêm com a
+        condição de parada escrita (o contador que diminui, a variável que
+        vira <code>False</code>, o <code>break</code>). Ao completar os
+        exercícios, tome cuidado para não apagar essas linhas.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-essenciais">
+      <h2 id="titulo-exercicios-essenciais">Exercícios essenciais</h2>
+      <p>
+        Três exercícios que cobrem o coração da aula. Quem fizer só estes
+        já revisou o essencial.
+      </p>
+
+      <section aria-labelledby="titulo-exercicio-adivinhe-o-numero">
+        <h3 id="titulo-exercicio-adivinhe-o-numero">
+          Exercício 1 — Adivinhe o número
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>while</code> + <code>break</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_01_adivinhe_o_numero.py</span>
+        </p>
+        <p>
+          O clássico que existe desde os primeiros computadores pessoais.
+          Sorteie um número de 1 a 100 com <code>random.randint()</code>.
+          Repetindo com <code>while</code>: peça um chute, converta com
+          <code>int()</code> e responda "maior" ou "menor". Quando a pessoa
+          acertar, imprima em quantas tentativas ela conseguiu e saia do
+          laço.
+        </p>
+        <p>
+          Este exercício pede um chute por vez, e cada chute abre uma caixa
+          de diálogo. Se você for jogar muitas rodadas, é mais confortável
+          no Thonny.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Chute um número entre 1 e 100: 50
+Maior que isso.
+Chute um número entre 1 e 100: 75
+Você acertou em 2 tentativas!</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use uma variável <code>acertou = False</code> e repita
+            <code>while not acertou:</code> — ou use <code>break</code>
+            assim que o chute bater. Os dois caminhos funcionam.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-adivinhe-o-numero">Seu código:</label>
+          <textarea id="codigo-adivinhe-o-numero" class="editor-python__codigo" rows="14">import random
+
+numero_secreto = random.randint(1, 100)
+tentativas = 0
+acertou = False
+
+while not acertou:
+    chute = int(input("Chute um número entre 1 e 100: "))
+    tentativas = tentativas + 1
+
+    if chute == numero_secreto:
+        acertou = True
+        print("Você acertou em " + str(tentativas) + " tentativas!")
+    # Escreva aqui os outros casos: avise "Maior que isso." ou "Menor que isso."</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 06 - Exercicio Adivinhe o Numero">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-menu-do-jogo">
+        <h3 id="titulo-exercicio-menu-do-jogo">
+          Exercício 2 — Menu do jogo
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>while</code> com variável de controle · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_02_menu_do_jogo.py</span>
+        </p>
+        <p>
+          Um menu que se repete até a pessoa escolher sair, com três
+          opções: 1) ver a ficha do personagem, 2) ver o inventário, 3)
+          sair. Use a variável <code>menu_aberto</code> e
+          <code>if</code> / <code>elif</code> / <code>else</code> para
+          tratar cada escolha, incluindo a opção inválida. Reimprima as
+          opções a cada volta do laço.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>--- MENU ---
+1 - Ver ficha
+2 - Ver inventário
+3 - Sair
+Escolha uma opção: 2</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Para sair, basta <code>menu_aberto = False</code> dentro do
+            <code>elif</code> da opção 3. O laço termina sozinho na volta
+            seguinte — você não precisa de <code>break</code>.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-menu-do-jogo">Seu código:</label>
+          <textarea id="codigo-menu-do-jogo" class="editor-python__codigo" rows="16">menu_aberto = True
+
+while menu_aberto:
+    print("--- MENU ---")
+    print("1 - Ver ficha")
+    print("2 - Ver inventário")
+    print("3 - Sair")
+
+    escolha = input("Escolha uma opção: ")
+    escolha = escolha.strip()
+
+    if escolha == "3":
+        menu_aberto = False
+        print("Até a próxima aventura!")
+    # Escreva aqui os casos das opções 1 e 2,
+    # e o else para quando a pessoa digitar qualquer outra coisa.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 06 - Exercicio Menu do Jogo">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-validando-a-resposta">
+        <h3 id="titulo-exercicio-validando-a-resposta">
+          Exercício 3 — Validando a resposta
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>while</code> de validação · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_03_validando_a_resposta.py</span>
+        </p>
+        <p>
+          Pergunte ao jogador se ele aceita a missão, aceitando só "sim" ou
+          "nao". Enquanto a resposta não for uma das duas, repita a
+          pergunta explicando o que é esperado. Normalize a resposta com
+          <code>.strip().lower()</code>.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Aceita a missão? (sim/nao): talvez
+Não entendi. Responda sim ou nao.
+Aceita a missão? (sim/nao): sim
+Boa sorte, aventureiro.</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>while resposta != "sim" and resposta != "nao":</code> —
+            ou, mais curto,
+            <code>while resposta not in ["sim", "nao"]:</code>, usando o
+            <code>in</code> da Aula 4.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-validando-a-resposta">Seu código:</label>
+          <textarea id="codigo-validando-a-resposta" class="editor-python__codigo" rows="12">resposta = ""
+
+while resposta not in ["sim", "nao"]:
+    resposta = input("Aceita a missão? (sim/nao): ")
+    resposta = resposta.strip().lower()
+
+    # Se a resposta não for sim nem nao, explique o que é esperado.
+
+print("Você respondeu: " + resposta)
+
+# Escreva aqui a resposta final: uma frase para quem aceitou
+# e outra para quem recusou a missão.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 06 - Exercicio Validando a Resposta">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-pratica">
+      <h2 id="titulo-exercicios-pratica">Exercícios de prática</h2>
+      <p>
+        Dez exercícios curtos, em ordem crescente de dificuldade, para
+        praticar mais o conteúdo desta aula. Cada um abre em uma caixa
+        recolhida — clique ou dê Enter no título para abrir.
+      </p>
+
+      <nav class="sumario-de-exercicios" aria-label="Sumário dos exercícios de prática">
+        <p>Ir direto para:</p>
+        <ol>
+          <li><a href="#exercicio-contagem-regressiva">Contagem regressiva do lançamento (fácil)</a></li>
+          <li><a href="#exercicio-senha-do-cofre">Senha do cofre (fácil)</a></li>
+          <li><a href="#exercicio-pedido-na-taverna">Pedido na taverna (fácil)</a></li>
+          <li><a href="#exercicio-fila-de-bugs">Fila de bugs do mutirão (médio)</a></li>
+          <li><a href="#exercicio-acabou-a-pocao">Acabou a poção de cura (médio)</a></li>
+          <li><a href="#exercicio-combate-por-turnos">Combate por turnos (médio)</a></li>
+          <li><a href="#exercicio-enquete-da-party">Enquete da party (médio)</a></li>
+          <li><a href="#exercicio-pulando-quem-caiu">Pulando quem já caiu (médio)</a></li>
+          <li><a href="#exercicio-caca-ao-tesouro">Caça ao tesouro (médio)</a></li>
+          <li><a href="#exercicio-maquina-de-vender">Máquina de vender itens (avançado)</a></li>
+        </ol>
+      </nav>
+
+      <details class="exercicio-de-pratica" id="exercicio-contagem-regressiva">
+        <summary>
+          1. Contagem regressiva do lançamento
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> com contador · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_04_contagem_regressiva.py</span>
+        </p>
+        <p>
+          Faça uma contagem de 10 até 1 usando <code>while</code> (não
+          <code>for</code>), terminando com a mensagem de lançamento.
+          Compare com o exercício parecido da Aula 3: quando o
+          <code>for</code> é melhor, e quando o <code>while</code> é melhor?
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A variável do contador precisa diminuir dentro do laço, ou ele
+            nunca termina. Aqui essa linha já vem escrita — não apague.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-contagem-regressiva">Seu código:</label>
+          <textarea id="codigo-contagem-regressiva" class="editor-python__codigo" rows="9">contador = 10
+
+while contador > 0:
+    print(contador)
+    contador = contador - 1
+
+# Depois do laço, imprima a mensagem de lançamento.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-senha-do-cofre">
+        <summary>
+          2. Senha do cofre
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> + contador · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_05_senha_do_cofre.py</span>
+        </p>
+        <p>
+          Três tentativas para acertar a senha do cofre. A cada erro, avise
+          quantas tentativas restam. Se as tentativas acabarem sem acerto,
+          imprima que o alarme disparou.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Duas coisas podem encerrar o laço: acertar a senha ou esgotar
+            as tentativas. Trate as duas — a condição do
+            <code>while</code> já cobre os dois casos.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-senha-do-cofre">Seu código:</label>
+          <textarea id="codigo-senha-do-cofre" class="editor-python__codigo" rows="15">senha_correta = "1234"
+tentativas_restantes = 3
+cofre_aberto = False
+
+while tentativas_restantes > 0 and not cofre_aberto:
+    digitada = input("Digite a senha do cofre: ")
+    tentativas_restantes = tentativas_restantes - 1
+
+    if digitada == senha_correta:
+        cofre_aberto = True
+        print("Cofre aberto!")
+    # Senão, avise quantas tentativas ainda restam.
+
+# Depois do laço: se o cofre não foi aberto, imprima que o alarme disparou.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-pedido-na-taverna">
+        <summary>
+          3. Pedido na taverna
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> + lista · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_06_pedido_na_taverna.py</span>
+        </p>
+        <p>
+          Peça itens ao jogador em laço, acrescentando cada um a uma lista,
+          até ele digitar "fechar conta". No fim, imprima o pedido completo
+          e quantos itens foram pedidos.
+        </p>
+        <p>
+          Cada pedido abre uma caixa de diálogo, então um pedido longo fica
+          mais confortável no Thonny.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A lista começa vazia antes do laço e cresce com
+            <code>append()</code> dentro dele. Cuidado para não
+            acrescentar o próprio "fechar conta" ao pedido.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-pedido-na-taverna">Seu código:</label>
+          <textarea id="codigo-pedido-na-taverna" class="editor-python__codigo" rows="13">pedido = []
+item = ""
+
+while item != "fechar conta":
+    item = input("O que você vai pedir? (ou 'fechar conta' para encerrar) ")
+    item = item.strip().lower()
+
+    # Se não for "fechar conta", acrescente o item à lista pedido.
+
+print("Seu pedido:")
+# Imprima cada item do pedido, um por linha, e quantos itens foram pedidos.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-fila-de-bugs">
+        <summary>
+          4. Fila de bugs do mutirão
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> com lista + <code>pop()</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_07_fila_de_bugs.py</span>
+        </p>
+        <p>
+          Com uma lista de bugs a resolver: enquanto a lista não estiver
+          vazia, retire um bug com <code>pop()</code>, imprima
+          "Resolvendo: ..." e passe o bug para uma segunda lista de
+          resolvidos. No fim, imprima a lista de resolvidos.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>while fila_de_bugs:</code> já funciona — uma lista vazia
+            é considerada falsa pelo Python, então o laço para sozinho
+            quando o último bug sai da fila.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-fila-de-bugs">Seu código:</label>
+          <textarea id="codigo-fila-de-bugs" class="editor-python__codigo" rows="12">fila_de_bugs = ["botão não clica", "tela pisca", "som não toca", "placar zera"]
+resolvidos = []
+
+while fila_de_bugs:
+    bug = fila_de_bugs.pop()
+    print("Resolvendo: " + bug)
+
+    # Acrescente o bug à lista de resolvidos.
+
+print("Bugs resolvidos:")
+# Imprima a lista de resolvidos, um por linha.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-acabou-a-pocao">
+        <summary>
+          5. Acabou a poção de cura
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> + <code>remove()</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_08_acabou_a_pocao.py</span>
+        </p>
+        <p>
+          Na lista de itens da loja, "poção de cura" aparece várias vezes.
+          Avise que o estoque acabou e use <code>while</code> para remover
+          todas as ocorrências. Imprima a lista antes e depois.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            <code>while "poção de cura" in itens:</code> repete enquanto
+            ainda houver pelo menos uma. O <code>remove()</code> tira uma
+            por vez, então o laço vai diminuindo a lista até não sobrar
+            nenhuma.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-acabou-a-pocao">Seu código:</label>
+          <textarea id="codigo-acabou-a-pocao" class="editor-python__codigo" rows="14">itens = ["poção de cura", "espada", "poção de cura", "escudo", "poção de cura"]
+
+print("Estoque antes:")
+for item in itens:
+    print("- " + item)
+
+while "poção de cura" in itens:
+    itens.remove("poção de cura")
+    # Avise, a cada remoção, que uma poção de cura saiu do estoque.
+
+print("Estoque depois:")
+# Imprima a lista de novo, um item por linha.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-combate-por-turnos">
+        <summary>
+          6. Combate por turnos
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> com duas condições · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_09_combate_por_turnos.py</span>
+        </p>
+        <p>
+          Herói e inimigo começam com pontos de vida. Enquanto os dois
+          estiverem vivos, cada turno sorteia o dano com
+          <code>random.randint()</code> e desconta. Imprima o estado a cada
+          turno em frase completa e anuncie o vencedor no fim.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A condição do laço usa <code>and</code>: os dois precisam
+            continuar vivos para o combate seguir. Como o dano sorteado é
+            sempre maior que zero, o combate sempre termina.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-combate-por-turnos">Seu código:</label>
+          <textarea id="codigo-combate-por-turnos" class="editor-python__codigo" rows="19">import random
+
+vida_do_heroi = 50
+vida_do_inimigo = 40
+turno = 1
+
+while vida_do_heroi > 0 and vida_do_inimigo > 0:
+    dano_do_heroi = random.randint(5, 15)
+    dano_do_inimigo = random.randint(5, 12)
+
+    vida_do_inimigo = vida_do_inimigo - dano_do_heroi
+    vida_do_heroi = vida_do_heroi - dano_do_inimigo
+
+    print("Turno " + str(turno) + ": o herói causou " + str(dano_do_heroi) + " de dano e recebeu " + str(dano_do_inimigo) + ".")
+    # Imprima a vida dos dois em frase completa.
+
+    turno = turno + 1
+
+# Depois do laço, anuncie o vencedor.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-enquete-da-party">
+        <summary>
+          7. Enquete da party
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> + dicionário · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_10_enquete_da_party.py</span>
+        </p>
+        <p>
+          Pergunte o nome e a classe preferida de vários jogadores,
+          guardando cada resposta num dicionário. Depois de cada cadastro,
+          pergunte se quer cadastrar mais alguém. No fim, imprima o
+          resultado completo da enquete.
+        </p>
+        <p>
+          São três caixas de diálogo por jogador cadastrado, então este
+          fica bem mais confortável no Thonny.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use uma variável de controle (<code>enquete_aberta = True</code>)
+            e vire para <code>False</code> quando a pessoa responder que
+            não quer cadastrar mais ninguém.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-enquete-da-party">Seu código:</label>
+          <textarea id="codigo-enquete-da-party" class="editor-python__codigo" rows="19">enquete = {}
+enquete_aberta = True
+
+while enquete_aberta:
+    nome = input("Nome do jogador: ")
+    classe = input("Classe preferida: ")
+
+    # Guarde a classe no dicionário enquete, usando o nome como chave.
+
+    continuar = input("Cadastrar mais alguém? (sim/nao) ")
+    continuar = continuar.strip().lower()
+
+    if continuar != "sim":
+        enquete_aberta = False
+
+print("Resultado da enquete:")
+# Percorra a enquete com .items() e imprima uma linha por jogador.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-pulando-quem-caiu">
+        <summary>
+          8. Pulando quem já caiu
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>continue</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_11_pulando_quem_caiu.py</span>
+        </p>
+        <p>
+          Percorra a lista de inimigos com suas vidas e use
+          <code>continue</code> para pular os que já estão com vida zero,
+          sem processá-los. Conte só os que continuam de pé.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            O <code>continue</code> não encerra o laço — ele só pula direto
+            para a próxima volta, ignorando o resto do bloco.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-pulando-quem-caiu">Seu código:</label>
+          <textarea id="codigo-pulando-quem-caiu" class="editor-python__codigo" rows="13">vidas_dos_inimigos = [0, 34, 0, 12, 90, 0]
+inimigos_de_pe = 0
+
+for vida in vidas_dos_inimigos:
+    if vida == 0:
+        continue
+
+    # Este inimigo ainda está de pé: some 1 em inimigos_de_pe.
+    print("Inimigo com " + str(vida) + " de vida ainda está de pé.")
+
+print("Inimigos de pé: " + str(inimigos_de_pe))</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-caca-ao-tesouro">
+        <summary>
+          9. Caça ao tesouro
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>while</code> + <code>random</code> + lista · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_12_caca_ao_tesouro.py</span>
+        </p>
+        <p>
+          O tesouro está em uma das 10 salas da masmorra, sorteada. O
+          jogador chuta números de sala até encontrar. Guarde as salas já
+          visitadas numa lista e avise quando ele repetir uma sala já
+          explorada.
+        </p>
+        <p>
+          Cada chute abre uma caixa de diálogo — no Thonny fica mais
+          confortável.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Antes de contar a tentativa, cheque com <code>in</code> se a
+            sala já foi visitada. O <code>continue</code> ajuda a voltar
+            para o começo do laço nesse caso.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-caca-ao-tesouro">Seu código:</label>
+          <textarea id="codigo-caca-ao-tesouro" class="editor-python__codigo" rows="19">import random
+
+sala_do_tesouro = random.randint(1, 10)
+salas_visitadas = []
+encontrou = False
+
+while not encontrou:
+    sala = int(input("Qual sala você quer explorar? (1 a 10) "))
+
+    if sala in salas_visitadas:
+        print("Você já explorou a sala " + str(sala) + ". Escolha outra.")
+        continue
+
+    salas_visitadas.append(sala)
+
+    if sala == sala_do_tesouro:
+        encontrou = True
+        print("Tesouro encontrado na sala " + str(sala) + "!")
+    # Senão, avise que a sala está vazia e diga quantas salas já explorou.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-maquina-de-vender">
+        <summary>
+          10. Máquina de vender itens
+          <span class="etiqueta-nivel etiqueta-nivel--avancado">AVANÇADO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          tudo junto · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_13_maquina_de_vender.py</span>
+        </p>
+        <p>
+          Uma máquina de itens com o estoque guardado em um dicionário
+          (item para quantidade) e os preços em outro. Um menu em
+          <code>while</code> que permite ver o estoque, comprar um item
+          (descontando do estoque e das moedas do jogador) e sair. Trate os
+          três problemas: item que não existe, estoque esgotado e moedas
+          insuficientes.
+        </p>
+        <p>
+          <strong>Requisito de acessibilidade:</strong> toda resposta
+          precisa fazer sentido ouvida em voz alta, sem depender de nada
+          desenhado na tela.
+        </p>
+        <p>
+          Este é o maior exercício da aula, com várias entradas seguidas —
+          escreva no Thonny.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Este junta tudo: <code>while</code>, os dicionários da Aula 5 e
+            o <code>if</code> / <code>elif</code> da Aula 4. Faça uma coisa
+            de cada vez: primeiro só o menu abrindo e fechando, depois a
+            opção de ver o estoque, e só então a compra.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-maquina-de-vender">Seu código:</label>
+          <textarea id="codigo-maquina-de-vender" class="editor-python__codigo" rows="26">estoque = {"poção de vida": 3, "flecha": 10, "tocha": 2}
+precos = {"poção de vida": 30, "flecha": 5, "tocha": 12}
+moedas = 100
+maquina_ligada = True
+
+while maquina_ligada:
+    print("--- MÁQUINA DE ITENS ---")
+    print("1 - Ver estoque")
+    print("2 - Comprar um item")
+    print("3 - Sair")
+    print("Você tem " + str(moedas) + " moedas.")
+
+    escolha = input("Escolha uma opção: ")
+    escolha = escolha.strip()
+
+    if escolha == "3":
+        maquina_ligada = False
+        print("Máquina desligada. Até a próxima!")
+    elif escolha == "1":
+        print("Estoque da máquina:")
+        # Mostre cada item com a quantidade e o preço, um por linha.
+    elif escolha == "2":
+        pedido = input("Qual item você quer comprar? ")
+        pedido = pedido.strip().lower()
+        # Trate os três casos: item que não existe, estoque esgotado
+        # e moedas insuficientes. Dando tudo certo, desconte estoque e moedas.
+    else:
+        print("Não entendi essa opção. Escolha 1, 2 ou 3.")</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <p class="bloco-feedback" data-assunto="Aula 06 - Exercicios de Pratica">
+        Alguma dúvida ou quer comentar sobre algum destes exercícios de
+        prática?
+        <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+        (no assunto que abrir, acrescente seu nome e diga qual exercício) —
+        ou copie o endereço diretamente:
+        <strong class="bloco-feedback__endereco"></strong>
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">
+        Desafio da semana — Caixa eletrônico de mentirinha
+      </h2>
+
+      <p>
+        <strong>Escreva e teste este desafio no Thonny, não no editor do
+        site.</strong> É um programa com laço longo e várias entradas, e no
+        Thonny você consegue interromper com Ctrl+C se algo travar.
+      </p>
+
+      <h3>O que você vai construir</h3>
+      <p>
+        Um caixa eletrônico de brincadeira, só com texto, que mostra um
+        menu repetindo até a pessoa escolher sair. Ele permite ver o saldo,
+        depositar, sacar e sair.
+      </p>
+
+      <h3>Por que isso é interessante</h3>
+      <p>
+        Esse é o formato de praticamente todo programa interativo que
+        existe: um laço que mostra opções, espera a escolha, responde e
+        volta ao começo. É o mesmo esqueleto do <em>game loop</em> que
+        vocês vão construir na Aula 9 com o pygame — só que ali ele roda 60
+        vezes por segundo, em vez de esperar você digitar.
+      </p>
+
+      <h3>Requisitos mínimos</h3>
+      <ol>
+        <li>
+          O menu se repete em um <code>while</code> até a pessoa escolher
+          sair.
+        </li>
+        <li>As opções são reimpressas a cada volta.</li>
+        <li>
+          Depositar e sacar alteram de verdade a variável do saldo.
+        </li>
+        <li>
+          Não deixar sacar mais do que o saldo disponível, avisando com uma
+          frase clara.
+        </li>
+        <li>
+          Toda escolha inválida recebe um <code>else</code> com mensagem
+          amigável, sem quebrar o programa.
+        </li>
+        <li>
+          O saldo aparece sempre em frase completa ("Seu saldo é de 150
+          reais."), nunca só um número solto.
+        </li>
+      </ol>
+
+      <h3>Exemplo de execução</h3>
+      <p>Um exemplo de como a conversa com o programa pode ficar:</p>
+      <pre><code>--- CAIXA ELETRÔNICO ---
+1 - Ver saldo
+2 - Depositar
+3 - Sacar
+4 - Sair
+Escolha uma opção: 1
+
+Seu saldo é de 100 reais.
+
+--- CAIXA ELETRÔNICO ---
+1 - Ver saldo
+2 - Depositar
+3 - Sacar
+4 - Sair
+Escolha uma opção: 2
+Quanto você quer depositar? 50
+
+Depósito de 50 reais realizado. Seu saldo é de 150 reais.
+
+--- CAIXA ELETRÔNICO ---
+1 - Ver saldo
+2 - Depositar
+3 - Sacar
+4 - Sair
+Escolha uma opção: 3
+Quanto você quer sacar? 300
+
+Saque não realizado: você pediu 300 reais, mas seu saldo é de 150 reais.
+
+--- CAIXA ELETRÔNICO ---
+1 - Ver saldo
+2 - Depositar
+3 - Sacar
+4 - Sair
+Escolha uma opção: 4
+
+Operação encerrada. Seu saldo final é de 150 reais. Até logo!</code></pre>
+
+      <h3>Vá além (opcional)</h3>
+      <ul>
+        <li>
+          Guardar um histórico das operações em uma lista e mostrar no fim.
+        </li>
+        <li>Limitar o saque a um valor máximo por operação.</li>
+        <li>
+          Pedir uma senha de 4 dígitos antes de abrir o menu, com três
+          tentativas.
+        </li>
+        <li>Cobrar uma taxa de saque.</li>
+        <li>
+          Guardar as contas em um dicionário e permitir escolher entre
+          conta corrente e poupança.
+        </li>
+      </ul>
+
+      <h3>Como entregar</h3>
+      <p>
+        Arquivo
+        <span class="arquivo-sugerido">desafio_06_caixa_eletronico.py</span>,
+        publicado no repositório do curso pela interface web do GitHub
+        (Add file → Upload files).
+      </p>
+
+      <h3>Checklist de conclusão</h3>
+      <ul>
+        <li>O menu repete e sai corretamente.</li>
+        <li>Nenhuma resposta do usuário trava ou quebra o programa.</li>
+        <li>Não é possível sacar mais do que o saldo.</li>
+        <li>Todas as mensagens fazem sentido ouvidas em voz alta.</li>
+        <li>Rodou sem laço infinito.</li>
+        <li>Está publicado no GitHub.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pesquisa">
+      <h2 id="titulo-pesquisa">Pesquisa da semana</h2>
+      <p>
+        Descubra o que é computação em nuvem, em poucas palavras. Venha na
+        próxima aula sabendo explicar, em uma frase, o que significa dizer
+        que um arquivo "está na nuvem".
+      </p>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Em um programa que fica repetindo, cada volta do laço precisa dizer
+        onde a pessoa está. "Tentativa 3 de 5. Chute um número entre 1 e
+        100." funciona muito melhor ouvido em voz alta do que só "Tente de
+        novo:".
+      </p>
+      <p>
+        Em menus que se repetem, reimprima as opções a cada volta, em vez
+        de supor que a pessoa ainda lembra do que foi dito lá em cima —
+        ninguém rola a tela para trás quando está ouvindo.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#while-statements">
+            Tutorial de Python — Instruções while
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">
+            Tutorial de Python — break, continue e else em laços
+          </a>
+        </li>
+        <li>
+          <a href="http://programarcadegames.com/index.php?lang=pt-br">
+            Program Arcade Games — curso gratuito de Python com jogos
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a class="contato-do-professor" href="#"></a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>
