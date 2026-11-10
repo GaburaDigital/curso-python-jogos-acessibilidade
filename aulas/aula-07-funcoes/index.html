@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula 7 — Funções | Curso de Python</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../../estilos/estilo-principal.css" />
+</head>
+<body>
+  <a class="link-pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <header class="cabecalho-do-site">
+    <a class="cabecalho-do-site__nome-do-curso" href="../../index.html">
+      Introdução à Programação com Python: Lógica, Jogos e Acessibilidade
+    </a>
+    <nav class="navegacao-principal" aria-label="Navegação principal">
+      <a href="../../index.html">Página inicial</a>
+    </nav>
+  </header>
+
+  <main id="conteudo-principal">
+    <h1>Aula 7 — Funções</h1>
+
+    <section aria-labelledby="titulo-objetivos">
+      <h2 id="titulo-objetivos">Objetivos</h2>
+      <ul>
+        <li>Definir funções com <code>def</code>.</li>
+        <li>Passar informações por parâmetros.</li>
+        <li>Devolver resultados com <code>return</code>.</li>
+        <li>Usar valores padrão.</li>
+        <li>Importar módulos.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pilula">
+      <h2 id="titulo-pilula">Pílula da aula — o que é um ambiente virtual</h2>
+      <p>
+        Imagine que cada projeto seu é uma oficina diferente, com suas
+        próprias ferramentas na bancada. Um ambiente virtual é isso: uma
+        caixa de ferramentas isolada por projeto, para que instalar algo em
+        um trabalho não quebre outro.
+      </p>
+      <p>
+        Vocês vão usar isso de verdade na Aula 9, quando instalarmos o
+        pygame-ce pelo Thonny.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-o-que-vamos-ver">
+      <h2 id="titulo-o-que-vamos-ver">O que vamos ver</h2>
+      <ul>
+        <li>
+          O que é uma função e por que ela existe: escrever uma vez, usar
+          quantas vezes quiser.
+        </li>
+        <li>
+          A anatomia do <code>def</code>: nome, parênteses, parâmetros,
+          dois pontos e o bloco indentado.
+        </li>
+        <li>
+          A diferença entre <strong>parâmetro</strong> (o nome que aparece
+          na definição) e <strong>argumento</strong> (o valor que você passa
+          na hora de chamar).
+        </li>
+        <li>
+          A diferença entre uma função que imprime e uma que devolve com
+          <code>return</code> — e por que a segunda é mais reaproveitável.
+        </li>
+        <li>
+          Valores padrão, para deixar um argumento opcional.
+        </li>
+        <li>Argumentos nomeados.</li>
+        <li>
+          <em>Docstring</em>: o comentário entre três aspas que explica o
+          que a função faz.
+        </li>
+        <li>Importar módulos da biblioteca padrão.</li>
+        <li>Guardar as próprias funções em um módulo separado.</li>
+      </ul>
+    </section>
+
+    <section
+      class="bloco-ficou-travado"
+      aria-labelledby="titulo-ficou-travado"
+    >
+      <h2 id="titulo-ficou-travado">Ficou travado?</h2>
+      <p>Seis erros que pegam quase todo mundo nesta aula:</p>
+      <ol>
+        <li>
+          <strong>Defini a função mas nada acontece.</strong> Definir não é
+          chamar. Depois do <code>def</code>, falta uma linha chamando a
+          função pelo nome, com parênteses.
+        </li>
+        <li>
+          <strong><code>NameError: name 'x' is not defined</code> ao usar
+          fora da função.</strong> A variável criada dentro da função só
+          existe lá dentro. Para usar fora, devolva com <code>return</code>
+          e guarde numa variável.
+        </li>
+        <li>
+          <strong>A função devolve <code>None</code>.</strong> Faltou o
+          <code>return</code>. Sem ele, toda função devolve
+          <code>None</code> automaticamente.
+        </li>
+        <li>
+          <strong><code>TypeError: ... missing 1 required positional
+          argument</code>.</strong> Você chamou a função com menos
+          argumentos do que ela pede.
+        </li>
+        <li>
+          <strong>Os valores saíram trocados.</strong> Argumentos
+          posicionais entram na ordem em que foram definidos. Use
+          argumentos nomeados (<code>sortear(minimo=1, maximo=10)</code>)
+          quando quiser garantir a ordem.
+        </li>
+        <li>
+          <strong><code>IndentationError</code>.</strong> O corpo da função
+          precisa de 4 espaços, igual ao <code>if</code> e ao
+          <code>while</code>.
+        </li>
+      </ol>
+    </section>
+
+    <section class="aviso-importante" aria-labelledby="titulo-aviso-modulo">
+      <h2 id="titulo-aviso-modulo">
+        Atenção: módulo próprio só funciona no Thonny
+      </h2>
+      <p>
+        Esta aula termina ensinando a guardar suas funções em um arquivo
+        separado — um <strong>módulo</strong> — e trazer de volta com
+        <code>import</code>. Isso é central no curso: a partir da Aula 14, o
+        jogo Invasão Alienígena é dividido em vários arquivos.
+      </p>
+      <p>
+        <strong>O que funciona aqui no site:</strong> importar módulos que
+        já vêm com o Python, como <code>import random</code>,
+        <code>import math</code> ou
+        <code>from random import randint</code>. Esses exercícios têm
+        editor normal e rodam direto na página.
+      </p>
+      <p>
+        <strong>O que não funciona aqui no site:</strong> criar o seu
+        próprio arquivo de funções e importá-lo. O editor da página roda um
+        trecho de código por vez e não dá para você criar um segundo
+        arquivo <code>.py</code> ao lado dele. Não existe jeito de
+        contornar isso, e também não vale a pena tentar: o lugar de fazer
+        esse exercício é o Thonny, no seu computador, que é onde você vai
+        programar de verdade da Aula 9 em diante.
+      </p>
+      <p>
+        Por isso, o último exercício de prática e o desafio da semana não
+        têm editor aqui. No lugar dele, você encontra o código dos dois
+        arquivos lado a lado, com o nome de cada um em cima, para você
+        copiar no Thonny e salvar na mesma pasta.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-essenciais">
+      <h2 id="titulo-exercicios-essenciais">Exercícios essenciais</h2>
+      <p>
+        Três exercícios que cobrem o coração da aula. Quem fizer só estes
+        já revisou o essencial.
+      </p>
+
+      <section aria-labelledby="titulo-exercicio-primeira-funcao">
+        <h3 id="titulo-exercicio-primeira-funcao">
+          Exercício 1 — Sua primeira função
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>def</code> + parâmetro · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_01_saudacao_do_jogo.py</span>
+        </p>
+        <p>
+          Crie uma função <code>saudar_jogador(nome)</code> que imprime uma
+          mensagem de boas-vindas usando o nome recebido. Chame a função
+          três vezes, com três nomes diferentes. Acrescente também uma
+          docstring explicando o que ela faz.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Bem-vindo à masmorra, Arya!
+Bem-vindo à masmorra, Kael!
+Bem-vindo à masmorra, Noa!</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Escrever <code>def</code> só ensina a função a existir. Para
+            ela acontecer, você precisa chamá-la pelo nome, com parênteses,
+            depois da definição.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-primeira-funcao">Seu código:</label>
+          <textarea id="codigo-primeira-funcao" class="editor-python__codigo" rows="10">def saudar_jogador(nome):
+    # Escreva aqui a docstring: um texto entre três aspas
+    # explicando o que esta função faz.
+    print("Bem-vindo à masmorra, " + nome + "!")
+
+
+saudar_jogador("Arya")
+# Chame a função mais duas vezes, com outros dois nomes.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 07 - Exercicio Sua Primeira Funcao">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-calcular-e-devolver">
+        <h3 id="titulo-exercicio-calcular-e-devolver">
+          Exercício 2 — Calcular e devolver
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · <code>return</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_02_calcular_e_devolver.py</span>
+        </p>
+        <p>
+          Crie uma função <code>calcular_dano(forca, arma)</code> que soma
+          os dois valores e devolve o resultado com <code>return</code>, sem
+          imprimir nada dentro dela. Guarde o retorno numa variável e só
+          então imprima a frase para o jogador. Chame a função duas vezes,
+          com valores diferentes.
+        </p>
+        <p>
+          Rode o código inicial antes de completar: ele imprime
+          <code>None</code>, que é exatamente o sintoma do item 3 do "Ficou
+          travado?" acima — a função ainda não devolve nada.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>O golpe causou 27 de dano.</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A diferença é sutil e importante: <code>print</code> mostra na
+            tela e acabou; <code>return</code> entrega o valor de volta para
+            quem chamou, e aí você faz o que quiser com ele.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-calcular-e-devolver">Seu código:</label>
+          <textarea id="codigo-calcular-e-devolver" class="editor-python__codigo" rows="11">def calcular_dano(forca, arma):
+    """Devolve o dano total somando a força do personagem e o poder da arma."""
+    # Some os dois valores e devolva o resultado com return.
+
+
+dano = calcular_dano(12, 15)
+print("O golpe causou " + str(dano) + " de dano.")
+
+# Chame a função mais uma vez, com outros valores, e imprima o resultado.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 07 - Exercicio Calcular e Devolver">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+
+      <section aria-labelledby="titulo-exercicio-valor-padrao">
+        <h3 id="titulo-exercicio-valor-padrao">
+          Exercício 3 — Valor padrão e argumento opcional
+        </h3>
+        <p class="metadados-do-exercicio">
+          <span class="etiqueta-nivel etiqueta-nivel--essencial">ESSENCIAL</span>
+          · valor padrão · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_03_criar_personagem.py</span>
+        </p>
+        <p>
+          Crie uma função
+          <code>criar_personagem(nome, classe="aventureiro")</code> que
+          devolve um dicionário com nome, classe e vida inicial. Chame uma
+          vez sem informar a classe (usando o padrão) e outra informando.
+          Imprima as duas fichas, uma informação por linha.
+        </p>
+
+        <p><strong>Exemplo de execução:</strong></p>
+        <pre><code>Nome: Noa
+Classe: aventureiro
+Vida: 100</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            O parâmetro com valor padrão vem sempre depois dos que não
+            têm. <code>def criar_personagem(classe="x", nome)</code> dá
+            erro de sintaxe.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-valor-padrao">Seu código:</label>
+          <textarea id="codigo-valor-padrao" class="editor-python__codigo" rows="14">def criar_personagem(nome, classe="aventureiro"):
+    """Devolve um dicionário com a ficha inicial do personagem."""
+    ficha = {"nome": nome, "classe": classe, "vida": 100}
+    return ficha
+
+
+personagem_um = criar_personagem("Noa")
+# Crie o segundo personagem informando a classe, por exemplo "maga".
+
+print("Nome: " + personagem_um["nome"])
+# Imprima a classe e a vida também, uma informação por linha.
+# Depois, imprima a ficha do segundo personagem.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+
+        <p class="bloco-feedback" data-assunto="Aula 07 - Exercicio Valor Padrao">
+          Alguma dúvida ou quer comentar sobre este exercício?
+          <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+          (no assunto que abrir, acrescente seu nome depois do nome do
+          exercício) — ou copie o endereço diretamente:
+          <strong class="bloco-feedback__endereco"></strong>
+        </p>
+      </section>
+    </section>
+
+    <section aria-labelledby="titulo-exercicios-pratica">
+      <h2 id="titulo-exercicios-pratica">Exercícios de prática</h2>
+      <p>
+        Dez exercícios curtos, em ordem crescente de dificuldade, para
+        praticar mais o conteúdo desta aula. Cada um abre em uma caixa
+        recolhida — clique ou dê Enter no título para abrir.
+      </p>
+
+      <nav class="sumario-de-exercicios" aria-label="Sumário dos exercícios de prática">
+        <p>Ir direto para:</p>
+        <ol>
+          <li><a href="#exercicio-conversor-reaproveitado">Conversor de temperatura reaproveitado (fácil)</a></li>
+          <li><a href="#exercicio-rolador-de-dados">Rolador de dados (fácil)</a></li>
+          <li><a href="#exercicio-ficha-formatada">Ficha formatada (fácil)</a></li>
+          <li><a href="#exercicio-esta-vivo">Está vivo? (fácil)</a></li>
+          <li><a href="#exercicio-caixa-de-ferramentas">Caixa de ferramentas (médio)</a></li>
+          <li><a href="#exercicio-funcao-dentro-do-laco">Função dentro do laço (médio)</a></li>
+          <li><a href="#exercicio-narrador-do-jogo">Narrador do jogo (médio)</a></li>
+          <li><a href="#exercicio-validando-com-funcao">Validando com função (médio)</a></li>
+          <li><a href="#exercicio-argumentos-nomeados">Argumentos nomeados (médio)</a></li>
+          <li><a href="#exercicio-minha-primeira-biblioteca">Minha primeira biblioteca (avançado, no Thonny)</a></li>
+        </ol>
+      </nav>
+
+      <details class="exercicio-de-pratica" id="exercicio-conversor-reaproveitado">
+        <summary>
+          1. Conversor de temperatura reaproveitado
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          <code>return</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_04_conversor_reaproveitado.py</span>
+        </p>
+        <p>
+          Transforme em função a lógica do conversor Celsius para
+          Fahrenheit da Aula 2. A função recebe o valor em Celsius e
+          devolve o valor em Fahrenheit. Chame com três temperaturas
+          diferentes.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A função só faz a conta e devolve. Quem imprime é o código de
+            fora — assim a mesma função serve para qualquer temperatura, em
+            qualquer programa.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-conversor-reaproveitado">Seu código:</label>
+          <textarea id="codigo-conversor-reaproveitado" class="editor-python__codigo" rows="11">def celsius_para_fahrenheit(celsius):
+    """Devolve a temperatura convertida de Celsius para Fahrenheit."""
+    fahrenheit = celsius * 9 / 5 + 32
+    return fahrenheit
+
+
+temperatura = celsius_para_fahrenheit(100)
+print("100 graus Celsius são " + str(temperatura) + " graus Fahrenheit.")
+
+# Chame a função com outras duas temperaturas e imprima os resultados.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-rolador-de-dados">
+        <summary>
+          2. Rolador de dados
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          função + <code>random</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_05_rolador_de_dados.py</span>
+        </p>
+        <p>
+          Crie a função <code>rolar_dado(lados=6)</code>, que sorteia um
+          número de 1 até <code>lados</code> e devolve. Chame sem argumento
+          (dado comum de 6 lados) e com <code>lados=20</code> (dado de
+          RPG).
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            O <code>import random</code> fica na primeira linha do arquivo,
+            fora da função — você importa uma vez e todas as funções do
+            arquivo podem usar.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-rolador-de-dados">Seu código:</label>
+          <textarea id="codigo-rolador-de-dados" class="editor-python__codigo" rows="10">import random
+
+
+def rolar_dado(lados=6):
+    """Devolve um número sorteado de 1 até a quantidade de lados do dado."""
+    return random.randint(1, lados)
+
+
+print("Dado comum: " + str(rolar_dado()))
+# Chame a função com lados=20 para rolar o dado de RPG e imprima o resultado.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-ficha-formatada">
+        <summary>
+          3. Ficha formatada
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          função que monta texto · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_06_ficha_formatada.py</span>
+        </p>
+        <p>
+          Crie a função <code>montar_ficha(nome, classe, vida)</code>, que
+          devolve um texto com as três informações, uma por linha. Imprima
+          o retorno. Repare que a função não imprime nada — ela só monta.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use <code>\n</code> dentro do texto para quebrar linha, ou
+            monte a string somando pedaços, como no código inicial.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-ficha-formatada">Seu código:</label>
+          <textarea id="codigo-ficha-formatada" class="editor-python__codigo" rows="10">def montar_ficha(nome, classe, vida):
+    """Devolve um texto com a ficha do personagem, uma informação por linha."""
+    ficha = "Nome: " + nome + "\n"
+    ficha = ficha + "Classe: " + classe + "\n"
+    # Acrescente a linha da vida (lembre do str()) e devolva a ficha.
+
+
+print(montar_ficha("Arya", "ladina", 80))</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-esta-vivo">
+        <summary>
+          4. Está vivo?
+          <span class="etiqueta-nivel etiqueta-nivel--facil">FÁCIL</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          função que devolve <code>True</code>/<code>False</code> · arquivo
+          sugerido:
+          <span class="arquivo-sugerido">exercicio_07_esta_vivo.py</span>
+        </p>
+        <p>
+          Crie a função <code>esta_vivo(vida)</code>, que devolve
+          <code>True</code> se a vida for maior que zero e
+          <code>False</code> caso contrário. Use o retorno dentro de um
+          <code>if</code> para decidir a mensagem.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Uma função pode devolver um booleano direto:
+            <code>return vida > 0</code> já é a resposta inteira, sem
+            precisar de <code>if</code> dentro da função.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-esta-vivo">Seu código:</label>
+          <textarea id="codigo-esta-vivo" class="editor-python__codigo" rows="11">def esta_vivo(vida):
+    """Devolve True se o personagem ainda tem vida, e False se não tem."""
+    return vida > 0
+
+
+vida_do_heroi = 0
+
+if esta_vivo(vida_do_heroi):
+    print("O herói continua de pé.")
+# Escreva aqui o else, avisando que o herói caiu.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-caixa-de-ferramentas">
+        <summary>
+          5. Caixa de ferramentas
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          várias funções no mesmo arquivo · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_08_caixa_de_ferramentas.py</span>
+        </p>
+        <p>
+          Escreva três funções pequenas no mesmo arquivo:
+          <code>calcular_media(notas)</code>,
+          <code>maior_valor(numeros)</code> e
+          <code>contar_itens(lista)</code>. Cada uma recebe uma lista e
+          devolve um resultado. Chame as três com a mesma lista e imprima
+          os resultados.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Separe as funções com duas linhas em branco — é a convenção da
+            PEP 8, e ajuda muito a enxergar onde uma termina e a outra
+            começa.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-caixa-de-ferramentas">Seu código:</label>
+          <textarea id="codigo-caixa-de-ferramentas" class="editor-python__codigo" rows="22">def calcular_media(notas):
+    """Devolve a média dos números da lista."""
+    total = 0
+    for nota in notas:
+        total = total + nota
+    return total / len(notas)
+
+
+def maior_valor(numeros):
+    """Devolve o maior número da lista."""
+    # Percorra a lista guardando o maior valor encontrado até agora.
+
+
+def contar_itens(lista):
+    """Devolve quantos itens a lista tem."""
+    # Devolva o tamanho da lista.
+
+
+pontos = [15, 42, 8, 23]
+
+print("Média: " + str(calcular_media(pontos)))
+# Imprima também o maior valor e a quantidade de itens.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-funcao-dentro-do-laco">
+        <summary>
+          6. Função dentro do laço
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          função + <code>for</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_09_funcao_dentro_do_laco.py</span>
+        </p>
+        <p>
+          Crie a função <code>descrever_inimigo(nome, vida)</code>, que
+          devolve uma frase. Percorra a lista de inimigos com
+          <code>for</code> e chame a função para cada um, imprimindo a
+          frase retornada.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            A mesma função serve para os 5 inimigos — é exatamente para
+            isso que funções existem.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-funcao-dentro-do-laco">Seu código:</label>
+          <textarea id="codigo-funcao-dentro-do-laco" class="editor-python__codigo" rows="14">def descrever_inimigo(nome, vida):
+    """Devolve uma frase descrevendo o inimigo e quanta vida ele tem."""
+    return "Um " + nome + " aparece com " + str(vida) + " pontos de vida."
+
+
+inimigos = ["goblin", "orc", "esqueleto", "lobo sombrio", "dragão filhote"]
+vidas = [20, 45, 15, 30, 90]
+
+for indice in range(len(inimigos)):
+    # Chame descrever_inimigo com o nome e a vida desta posição
+    # e imprima a frase devolvida.
+    print("Inimigo " + str(indice + 1) + ":")</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-narrador-do-jogo">
+        <summary>
+          7. Narrador do jogo
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          separar calcular de falar · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_10_narrador_do_jogo.py</span>
+        </p>
+        <p>
+          Duas funções: <code>calcular_pontos(inimigos_derrotados)</code>,
+          que só faz a conta e devolve, e <code>narrar(mensagem)</code>, que
+          imprime a mensagem em frase completa. Use as duas juntas. Repare
+          que, se um dia você quiser mudar como o jogo fala, muda só a
+          <code>narrar()</code>.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Este padrão é o que vocês vão usar no jogo das próximas aulas:
+            um único lugar responsável por falar com o jogador.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-narrador-do-jogo">Seu código:</label>
+          <textarea id="codigo-narrador-do-jogo" class="editor-python__codigo" rows="17">def calcular_pontos(inimigos_derrotados):
+    """Devolve a pontuação total: cada inimigo derrotado vale 50 pontos."""
+    return inimigos_derrotados * 50
+
+
+def narrar(mensagem):
+    """Imprime uma mensagem para o jogador, em frase completa."""
+    print(mensagem)
+
+
+pontos = calcular_pontos(7)
+narrar("Fase concluída. Você derrotou 7 inimigos e ganhou " + str(pontos) + " pontos.")
+
+# Chame as duas funções de novo, com outra quantidade de inimigos.
+# Depois mude só a narrar(), para ela começar toda frase com "Narrador: ".</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-validando-com-funcao">
+        <summary>
+          8. Validando com função
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          função + <code>while</code> · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_11_validando_com_funcao.py</span>
+        </p>
+        <p>
+          Crie a função <code>pedir_numero(mensagem)</code>, que pergunta ao
+          usuário, repete enquanto a resposta não for um número válido, e
+          devolve o número convertido. Use a função duas vezes no programa
+          principal.
+        </p>
+        <p>
+          Cada pergunta abre uma caixa de diálogo, então este fica mais
+          confortável no Thonny.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Use <code>.isdigit()</code> para checar se o texto digitado é
+            formado só por dígitos — ainda não vimos
+            <code>try</code>/<code>except</code>. A condição de parada do
+            laço já vem escrita no código inicial: cuidado para não apagar.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-validando-com-funcao">Seu código:</label>
+          <textarea id="codigo-validando-com-funcao" class="editor-python__codigo" rows="17">def pedir_numero(mensagem):
+    """Pergunta até receber um número válido e devolve o número convertido."""
+    resposta = ""
+
+    while not resposta.isdigit():
+        resposta = input(mensagem)
+        resposta = resposta.strip()
+
+        # Se a resposta não for um número, explique o que é esperado.
+
+    return int(resposta)
+
+
+idade = pedir_numero("Quantos anos você tem? ")
+print("Você tem " + str(idade) + " anos.")
+
+# Use a função mais uma vez, para pedir outro número.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-argumentos-nomeados">
+        <summary>
+          9. Argumentos nomeados
+          <span class="etiqueta-nivel etiqueta-nivel--medio">MÉDIO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          ordem dos argumentos · arquivo sugerido:
+          <span class="arquivo-sugerido">exercicio_12_argumentos_nomeados.py</span>
+        </p>
+        <p>
+          Crie a função <code>criar_item(nome, preco, raro=False)</code>.
+          Chame três vezes: uma com os argumentos na ordem, uma usando
+          argumentos nomeados fora de ordem, e uma marcando
+          <code>raro=True</code>. Imprima o item devolvido em cada caso,
+          uma informação por linha.
+        </p>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Com argumentos nomeados, a ordem não importa:
+            <code>criar_item(preco=50, nome="Elmo")</code> funciona.
+          </p>
+        </details>
+
+        <div class="editor-python" data-editor-python>
+          <label for="codigo-argumentos-nomeados">Seu código:</label>
+          <textarea id="codigo-argumentos-nomeados" class="editor-python__codigo" rows="16">def criar_item(nome, preco, raro=False):
+    """Devolve um dicionário com os dados do item da loja."""
+    return {"nome": nome, "preco": preco, "raro": raro}
+
+
+espada = criar_item("Espada curta", 50)
+print("Nome: " + espada["nome"])
+print("Preço: " + str(espada["preco"]))
+print("Raro: " + str(espada["raro"]))
+
+# Crie um item usando argumentos nomeados fora de ordem,
+# por exemplo criar_item(preco=120, nome="Elmo de ferro").
+
+# Crie um terceiro item marcando raro=True e imprima os três.</textarea>
+          <button type="button" class="editor-python__executar">▶ Executar</button>
+          <div class="editor-python__saida" aria-live="polite"></div>
+        </div>
+      </details>
+
+      <details class="exercicio-de-pratica" id="exercicio-minha-primeira-biblioteca">
+        <summary>
+          10. Minha primeira biblioteca
+          <span class="etiqueta-nivel etiqueta-nivel--avancado">AVANÇADO</span>
+        </summary>
+        <p class="metadados-do-exercicio">
+          módulo próprio · arquivos sugeridos:
+          <span class="arquivo-sugerido">ferramentas_do_jogo.py</span> e
+          <span class="arquivo-sugerido">jogo_principal.py</span>
+        </p>
+
+        <div class="aviso-importante">
+          <p>
+            <strong>Este exercício é feito no Thonny, não aqui no site.</strong>
+            Ele precisa de dois arquivos salvos na mesma pasta, e o editor
+            desta página roda um trecho de código por vez, sem lugar para
+            criar um segundo arquivo. Copie os dois blocos abaixo no
+            Thonny, salve com os nomes indicados, na mesma pasta, e rode o
+            <span class="arquivo-sugerido">jogo_principal.py</span>.
+          </p>
+        </div>
+
+        <p>
+          Você vai montar sua primeira biblioteca: um arquivo só com
+          funções úteis, e outro que importa e usa essas funções. É assim
+          que o jogo Invasão Alienígena vai ser organizado a partir da Aula
+          14.
+        </p>
+
+        <p>Primeiro arquivo, só com as ferramentas:</p>
+        <p><span class="arquivo-sugerido">ferramentas_do_jogo.py</span></p>
+        <pre><code>"""Ferramentas reaproveitáveis para os jogos do curso."""
+
+import random
+
+
+def rolar_dado(lados=6):
+    """Devolve um número sorteado de 1 até a quantidade de lados."""
+    return random.randint(1, lados)
+
+
+def esta_vivo(vida):
+    """Devolve True se o personagem ainda tem vida."""
+    return vida &gt; 0
+
+
+def montar_ficha(nome, classe, vida):
+    """Devolve a ficha do personagem, uma informação por linha."""
+    ficha = "Nome: " + nome + "\n"
+    ficha = ficha + "Classe: " + classe + "\n"
+    ficha = ficha + "Vida: " + str(vida)
+    return ficha</code></pre>
+
+        <p>Segundo arquivo, que usa as ferramentas:</p>
+        <p><span class="arquivo-sugerido">jogo_principal.py</span></p>
+        <pre><code>import ferramentas_do_jogo
+from ferramentas_do_jogo import rolar_dado
+
+# Forma 1: com o nome do módulo na frente.
+dano = ferramentas_do_jogo.rolar_dado(20)
+print("Dano do golpe: " + str(dano))
+
+# Forma 2: importando a função direto, sem o nome do módulo.
+iniciativa = rolar_dado()
+print("Iniciativa: " + str(iniciativa))
+
+# Agora use as outras duas funções do módulo:
+# esta_vivo() e montar_ficha().</code></pre>
+
+        <details class="dica">
+          <summary>Ver dica</summary>
+          <p>
+            Os dois arquivos precisam estar na mesma pasta, e o
+            <code>import</code> usa o nome do arquivo sem o
+            <code>.py</code>. Se o Thonny reclamar que não encontrou o
+            módulo, quase sempre é porque um dos arquivos foi salvo em
+            outra pasta.
+          </p>
+        </details>
+      </details>
+
+      <p class="bloco-feedback" data-assunto="Aula 07 - Exercicios de Pratica">
+        Alguma dúvida ou quer comentar sobre algum destes exercícios de
+        prática?
+        <a class="bloco-feedback__link" href="#">Envie um e-mail</a>
+        (no assunto que abrir, acrescente seu nome e diga qual exercício) —
+        ou copie o endereço diretamente:
+        <strong class="bloco-feedback__endereco"></strong>
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-desafio">
+      <h2 id="titulo-desafio">
+        Desafio da semana — Refatorando um desafio antigo
+      </h2>
+
+      <p>
+        <strong>Escreva e teste este desafio no Thonny.</strong> Você vai
+        mexer em um programa inteiro, e o "Vá além" sugere separar as
+        funções em um arquivo próprio — o que só funciona lá.
+      </p>
+
+      <h3>O que você vai construir</h3>
+      <p>
+        Nada novo — e essa é a graça. Você vai pegar um desafio que já
+        entregou (o caixa eletrônico da Aula 6 ou a agenda de contatos da
+        Aula 3) e reorganizar o mesmo programa usando funções, sem mudar o
+        que ele faz por fora.
+      </p>
+
+      <h3>Por que isso é interessante</h3>
+      <p>
+        Isso tem nome no mundo real: <strong>refatorar</strong>. É o que
+        acontece em qualquer equipe quando um código funciona mas ficou
+        difícil de mexer. O programa continua igual para quem usa; o que
+        muda é como ele está organizado por dentro. É também o motivo de a
+        Aula 14 existir: lá vocês vão fazer exatamente isso com o jogo.
+      </p>
+
+      <h3>Requisitos mínimos</h3>
+      <ol>
+        <li>Escolher um desafio seu já entregue.</li>
+        <li>
+          Separar o programa em pelo menos três funções, com nomes
+          descritivos em português.
+        </li>
+        <li>
+          Pelo menos uma função precisa usar <code>return</code>, não só
+          imprimir.
+        </li>
+        <li>
+          Cada função tem uma docstring de uma linha dizendo o que ela faz.
+        </li>
+        <li>
+          O programa principal fica curto e legível no fim do arquivo,
+          basicamente chamando as funções em ordem.
+        </li>
+        <li>
+          O programa continua funcionando exatamente como antes — mesma
+          experiência para quem usa.
+        </li>
+      </ol>
+
+      <h3>Exemplo de execução</h3>
+      <p>
+        Aqui o exemplo não é o programa rodando (ele roda igual ao de
+        antes!), e sim o que muda no código. Veja um pedaço do caixa
+        eletrônico da Aula 6, antes e depois.
+      </p>
+
+      <p>Antes — tudo solto no meio do programa:</p>
+      <pre><code>escolha = input("Escolha uma opção: ")
+
+if escolha == "3":
+    valor = int(input("Quanto você quer sacar? "))
+    if valor &gt; saldo:
+        print("Saque não realizado: você pediu " + str(valor) + " reais, mas seu saldo é de " + str(saldo) + " reais.")
+    else:
+        saldo = saldo - valor
+        print("Saque de " + str(valor) + " reais realizado. Seu saldo é de " + str(saldo) + " reais.")</code></pre>
+
+      <p>Depois — a mesma coisa, virada função:</p>
+      <pre><code>def sacar(saldo, valor):
+    """Devolve o novo saldo depois do saque, ou o saldo original se não houver dinheiro."""
+    if valor &gt; saldo:
+        narrar("Saque não realizado: você pediu " + str(valor) + " reais, mas seu saldo é de " + str(saldo) + " reais.")
+        return saldo
+
+    novo_saldo = saldo - valor
+    narrar("Saque de " + str(valor) + " reais realizado. Seu saldo é de " + str(novo_saldo) + " reais.")
+    return novo_saldo
+
+
+# No programa principal, a opção de saque cabe em duas linhas:
+valor = int(input("Quanto você quer sacar? "))
+saldo = sacar(saldo, valor)</code></pre>
+
+      <h3>Vá além (opcional)</h3>
+      <ul>
+        <li>
+          Separar as funções em um arquivo próprio
+          (<span class="arquivo-sugerido">ferramentas.py</span>) e importar
+          no principal.
+        </li>
+        <li>
+          Criar uma função <code>narrar()</code> única, por onde passam
+          todas as mensagens ao usuário.
+        </li>
+        <li>
+          Acrescentar valores padrão em pelo menos uma função.
+        </li>
+        <li>
+          Escrever as docstrings de forma que outra pessoa consiga usar
+          suas funções só lendo elas.
+        </li>
+        <li>
+          Comparar o tamanho do seu programa principal antes e depois.
+        </li>
+      </ul>
+
+      <h3>Como entregar</h3>
+      <p>
+        Arquivo
+        <span class="arquivo-sugerido">desafio_07_refatorando_com_funcoes.py</span>,
+        no repositório do curso, pelo GitHub web (Add file → Upload files).
+        Mantenha também o arquivo antigo no repositório — a comparação
+        entre os dois é a parte mais interessante do portfólio.
+      </p>
+
+      <h3>Checklist de conclusão</h3>
+      <ul>
+        <li>O programa faz exatamente o que fazia antes.</li>
+        <li>Tem pelo menos três funções com nomes descritivos.</li>
+        <li>Pelo menos uma usa <code>return</code>.</li>
+        <li>Todas têm docstring.</li>
+        <li>O programa principal cabe em poucas linhas.</li>
+        <li>
+          As mensagens continuam fazendo sentido ouvidas em voz alta.
+        </li>
+        <li>
+          Está publicado no GitHub, ao lado da versão antiga.
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titulo-pesquisa">
+      <h2 id="titulo-pesquisa">Pesquisa da semana</h2>
+      <p>
+        Descubra o que são <code>*args</code> e <code>**kwargs</code> —
+        aquelas estrelinhas que aparecem em definições de função por aí. Não
+        precisa usar no desafio: venha na próxima aula sabendo dizer, em
+        uma frase, para que servem.
+      </p>
+      <p>
+        Ponto de partida:
+        <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#arbitrary-argument-lists">
+          Tutorial de Python — Listas de argumentos arbitrárias
+        </a>
+      </p>
+    </section>
+
+    <section
+      class="nota-de-acessibilidade"
+      aria-labelledby="titulo-nota-acessibilidade"
+    >
+      <h2 id="titulo-nota-acessibilidade">Nota de acessibilidade</h2>
+      <p>
+        Esta aula tem uma boa prática que ajuda muito quem usa leitor de
+        tela — e é a mesma coisa que torna seu código melhor para todo
+        mundo: <strong>separe a função que calcula da função que
+        fala</strong>.
+      </p>
+      <p>
+        Uma função que só faz a conta e devolve o resultado com
+        <code>return</code> pode ser reaproveitada em qualquer lugar. A
+        função que monta a frase para o jogador fica separada, e é nela que
+        você cuida para a mensagem fazer sentido ouvida em voz alta.
+      </p>
+      <p>
+        No jogo das próximas aulas, isso vira uma função
+        <code>narrar()</code> única — o lugar certo para melhorar todas as
+        falas do jogo de uma vez só.
+      </p>
+    </section>
+
+    <section aria-labelledby="titulo-continue-estudando">
+      <h2 id="titulo-continue-estudando">Continue estudando</h2>
+      <ul>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/controlflow.html#defining-functions">
+            Tutorial de Python — Definindo funções
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.python.org/pt-br/3.14/tutorial/modules.html">
+            Tutorial de Python — Módulos
+          </a>
+        </li>
+        <li>
+          <a href="https://peps.python.org/pep-0008/#function-and-variable-names">
+            PEP 8 — Nomes de funções e variáveis
+          </a>
+        </li>
+        <li>
+          <a href="http://programarcadegames.com/index.php?lang=pt-br">
+            Program Arcade Games — curso gratuito de Python com jogos
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-do-site">
+    <p>
+      <a href="https://github.com/GaburaDigital/curso-python-jogos-acessibilidade">
+        Repositório do site no GitHub
+      </a>
+    </p>
+    <p>
+      Dúvidas ou contato:
+      <a class="contato-do-professor" href="#"></a>
+    </p>
+  </footer>
+
+  <script src="../../scripts/endereco-professor.js" defer></script>
+  <script src="../../scripts/editor-python.js" defer></script>
+</body>
+</html>
